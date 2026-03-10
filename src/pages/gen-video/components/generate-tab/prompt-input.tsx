@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Sparkles, Zap, Ban, Eye, EyeOff } from "lucide-react";
+import { Sparkles, Zap, Ban, Eye, EyeOff, LayoutDashboard, Clock } from "lucide-react";
 import { FieldLabel } from "@/components/primary/field-label";
-import { I2VImagePicker } from "@/pages/gen-video/components/i2v-image-picker";
+import { I2VImagePicker } from "@/pages/gen-video/components/generate-tab/i2v-image-picker";
 import { PrimaryButton } from "@/components/primary/primary-button";
-import { type Mode } from "@/pages/gen-video";
+import { DropdownSelector } from "@/components/primary/dropdown-selector";
+import { type Mode, type AspectRatio, type Duration } from "@/pages/gen-video";
 import { cn } from "@/lib/utils";
 
 interface PromptInputProps {
@@ -12,9 +13,25 @@ interface PromptInputProps {
   onChange: (v: string) => void;
   negativePrompt: string;
   onNegativeChange: (v: string) => void;
+  aspectRatio: AspectRatio;
+  onAspectRatioChange: (v: AspectRatio) => void;
+  duration: Duration;
+  onDurationChange: (v: Duration) => void;
+  onGenerate: () => void;
 }
 
-export function PromptInput({ mode, prompt, onChange, negativePrompt, onNegativeChange }: PromptInputProps) {
+export function PromptInput({ 
+  mode, 
+  prompt, 
+  onChange, 
+  negativePrompt, 
+  onNegativeChange,
+  aspectRatio,
+  onAspectRatioChange,
+  duration,
+  onDurationChange,
+  onGenerate
+}: PromptInputProps) {
   const [showNegative, setShowNegative] = useState(false);
 
   const hasNegative = negativePrompt.trim().length > 0;
@@ -29,24 +46,26 @@ export function PromptInput({ mode, prompt, onChange, negativePrompt, onNegative
           {showNegative ? "Negative Prompt" : "Positive Prompt"}
         </FieldLabel>
 
-        <button
-          onClick={() => setShowNegative(!showNegative)}
-          className={cn(
-            "flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-200 border",
-            showNegative 
-              ? "bg-accent/10 border-accent/30 text-accent" 
-              : "bg-white/5 border-white/10 text-muted hover:text-brand hover:border-white/20"
-          )}
-        >
-          {showNegative? (<Eye size={13}/>): (<EyeOff size={13} />)} 
-          Negative Prompt
-          {!showNegative && hasNegative && (
-            <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-          )}
-          {showNegative && hasPositive && (
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowNegative(!showNegative)}
+            className={cn(
+              "flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-200 border",
+              showNegative 
+                ? "bg-accent/10 border-accent/30 text-accent" 
+                : "bg-white/5 border-white/10 text-muted hover:text-brand hover:border-white/20"
+            )}
+          >
+            {showNegative? (<Eye size={13}/>): (<EyeOff size={13} />)} 
+            Negative
+            {!showNegative && hasNegative && (
+              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+            )}
+            {showNegative && hasPositive && (
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            )}
+          </button>
+        </div>
       </div>
 
       <div className="relative">
@@ -76,7 +95,27 @@ export function PromptInput({ mode, prompt, onChange, negativePrompt, onNegative
           </div>
         </div>
 
-        <PrimaryButton className="md:absolute md:bottom-4 md:right-4 mt-3 md:mt-0 w-full md:w-auto px-6 py-2.5 rounded-full text-sm">
+        <div className="flex items-center gap-2">
+          <DropdownSelector
+            variant="small"
+            icon={<LayoutDashboard size={11} />}
+            options={['16:9', '9:16','1:1', '4:3'] as AspectRatio[]}
+            value={aspectRatio}
+            onChange={onAspectRatioChange}
+          />
+          <DropdownSelector
+            variant="small"
+            icon={<Clock size={11} />}
+            options={['5s', '10s', '15s'] as Duration[]}
+            value={duration}
+            onChange={onDurationChange}
+          />
+        </div>
+
+        <PrimaryButton 
+          onClick={onGenerate}
+          className="md:absolute md:bottom-12 md:right-4 mt-3 md:mt-0 w-full md:w-auto px-6 py-2.5 rounded-full text-sm"
+        >
           Generate <Zap size={15} />
         </PrimaryButton>
       </div>

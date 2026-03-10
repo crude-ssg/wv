@@ -1,29 +1,30 @@
-import { useState } from 'react';
-import {
-  LayoutDashboard,
-  Clock,
-  Menu,
-} from 'lucide-react';
+import { useState, useRef } from 'react';
+import { PlayCircle, Loader2, Menu, Sparkles } from 'lucide-react';
 import { GradientCard } from '@/components/primary/gradient-card';
 import { Sidebar } from '@/components/sidebar';
-import { PageHeader } from '@/pages/gen-video/components/page-header';
-import { ModeToggle } from '@/pages/gen-video/components/mode-toggle';
-import { OptionSelector } from '@/components/primary/option-selector';
-import { PromptInput } from '@/pages/gen-video/components/prompt-input';
+import { GenerateTab, type GenSettings } from '@/pages/gen-video/components/generate-tab';
+import { OutputTab, type OutputTabHandle } from '@/pages/gen-video/components/output-tab';
 import { Pill } from '@/components/primary/pill';
 import { GlowDot } from '@/components/primary/glow-dot';
+import { cn } from "@/lib/utils";
 
 export type Mode = 'T2V' | 'I2V';
 export type AspectRatio = '16:9' | '4:3' | '1:1' | '3:4' | '9:16';
 export type Duration = '5s' | '10s' | '15s';
 
 export function GenVideoPage() {
-  const [mode, setMode] = useState<Mode>('T2V');
-  const [aspectRatio, setAspectRatio] = useState<AspectRatio>('16:9');
-  const [duration, setDuration] = useState<Duration>('10s');
-  const [prompt, setPrompt] = useState('');
-  const [negativePrompt, setNegativePrompt] = useState('');
+  const [activeTab, setActiveTab] = useState<'generate' | 'output'>('generate');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  
+  const outputTabRef = useRef<OutputTabHandle>(null);
+
+  const handleGenerate = (settings: GenSettings) => {
+    setActiveTab('output');
+    // We need to wait a tick for the tab to be potentially "visible" if we were doing mount-based logic,
+    // but with hidden it should be fine. However, startGeneration is imperative.
+    outputTabRef.current?.startGeneration(settings);
+  };
 
   return (
     <div className="flex h-screen w-full overflow-hidden bg-bg">
@@ -41,37 +42,58 @@ export function GenVideoPage() {
           </button>
         </div>
 
-        <div className="w-full max-w-4xl space-y-8 px-4 py-8 lg:px-10 lg:py-10">
-          <PageHeader />
-
-          <GradientCard className="p-4 md:p-8 space-y-6 md:space-y-8">
-            <ModeToggle mode={mode} onChange={setMode} />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-              <OptionSelector
-                label="Aspect Ratio"
-                icon={<LayoutDashboard size={13} />}
-                options={['16:9', '9:16','1:1', '4:3'] as AspectRatio[]}
-                value={aspectRatio}
-                onChange={setAspectRatio}
-              />
-              <OptionSelector
-                label="Duration"
-                icon={<Clock size={13} />}
-                options={['5s', '10s', '15s'] as Duration[]}
-                value={duration}
-                onChange={setDuration}
-                stretch
-              />
+        <div className="w-full h-full p-2 md:p-4 flex flex-col">
+          <GradientCard className="flex-1 flex flex-col">
+            {/* Tabs Header */}
+            <div className="flex items-center gap-4 px-6 pt-4 border-b border-white/5">
+              <button
+                onClick={() => setActiveTab('generate')}
+                className={cn(
+                  "flex items-center gap-2 pb-3 text-sm font-bold transition-all relative",
+                  activeTab === 'generate' ? "text-accent" : "text-muted hover:text-brand"
+                )}
+              >
+                <Sparkles size={16} />
+                Generate
+                {activeTab === 'generate' && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-accent rounded-full shadow-glow-sm" />
+                )}
+              </button>
+              <button
+                onClick={() => setActiveTab('output')}
+                className={cn(
+                  "flex items-center gap-2 pb-3 text-sm font-bold transition-all relative",
+                  activeTab === 'output' ? "text-accent" : "text-muted hover:text-brand"
+                )}
+              >
+                <PlayCircle size={16} />
+                Output
+                {isProcessing && <Loader2 size={12} className="animate-spin text-accent" />}
+                {activeTab === 'output' && (
+                  <div className="absolute bottom-0 left-0 w-full h-0.5 bg-accent rounded-full shadow-glow-sm" />
+                )}
+              </button>
             </div>
 
-            <PromptInput 
-              mode={mode} 
-              prompt={prompt} 
-              onChange={setPrompt} 
-              negativePrompt={negativePrompt}
-              onNegativeChange={setNegativePrompt}
-            />
+            <div className="flex-1 relative min-h-0">
+               {/* 
+                 We keep both mounted to preserve state. 
+                 We use absolute positioning to stack them and control visibility with opacity/pointer-events OR display:none.
+                 Using display:none is safer for avoiding layout issues, but we might lose some transitions.
+                 However, the user asked for state movement, which requires persistence.
+               */}
+               <div className={cn("absolute inset-0 flex flex-col", activeTab !== 'generate' && "hidden")}>
+                  <GenerateTab onGenerate={handleGenerate} />
+               </div>
+               
+               <div className={cn("absolute inset-0 flex flex-col", activeTab !== 'output' && "hidden")}>
+                  <OutputTab 
+                    ref={outputTabRef} 
+                    onRetry={() => setActiveTab('generate')} 
+                    onProcessingChange={setIsProcessing} 
+                  />
+               </div>
+            </div>
           </GradientCard>
         </div>
       </main>

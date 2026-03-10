@@ -38,6 +38,16 @@
   --shadow-mode-btn:  0 8px 24px rgba(255, 79, 163, 0.35);
 }
 
+@keyframes progress {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-progress {
+  animation: progress 2s infinite linear;
+}
+
 /* ─── Base ──────────────────────────────────────────────────────────────────── */
 @layer base {
   body {
