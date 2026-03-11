@@ -13,6 +13,8 @@ export type ApiErrorType =
   | "ValidationError"
   | "UnauthenticatedError"
   | "MethodNotAllowedError"
+  | "InsufficientTokensError"
+  | "GenerateAlreadyPendingError"
   | "InternalServerError"
 
 export interface ApiErrorPayload {
@@ -27,6 +29,8 @@ export class NotFoundError extends ApiError {}
 export class ValidationError extends ApiError {}
 export class UnauthenticatedError extends ApiError {}
 export class MethodNotAllowedError extends ApiError {}
+export class InsufficientTokensError extends ApiError {}
+export class GenerateAlreadyPendingError extends ApiError {}
 export class InternalServerError extends ApiError {}
 
 export const errorMap = {
@@ -34,5 +38,7 @@ export const errorMap = {
   ValidationError,
   UnauthenticatedError,
   MethodNotAllowedError,
+  InsufficientTokensError,
+  GenerateAlreadyPendingError,
   InternalServerError
 } as const

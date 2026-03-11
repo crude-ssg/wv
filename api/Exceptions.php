@@ -41,6 +41,16 @@ class MethodNotAllowedError extends ApiError
     protected int $status = 405;
 }
 
+class InsufficientTokensError extends ApiError
+{
+    protected int $status = 400;
+}
+
+class GenerateAlreadyPendingError extends ApiError
+{
+    protected int $status = 400;
+}
+
 class InternalServerError extends ApiError
 {
     protected int $status = 500;

@@ -26,7 +26,7 @@ class Database
     {
         self::init();
         self::$connection = new mysqli(self::$host, self::$username, self::$password, self::$database);
-        if(self::$connection->connect_error) {
+        if (self::$connection->connect_error) {
             throw new Exception("Failed to connect to database");
         }
     }
@@ -57,6 +57,35 @@ class Database
 
         $stmt->execute();
         return $stmt->get_result();
+    }
+
+    public static function deductUserTokens(int $userId, int $amount): bool
+    {
+        if ($amount <= 0) {
+            return false; // nothing to deduct
+        }
+
+        // Atomically decrement tokens, ensuring they don't go negative
+        $sql = "UPDATE users 
+                SET tokens = GREATEST(tokens - ?, 0) 
+                WHERE id = ?";
+        $stmt = self::query($sql, [$amount, $userId]);
+
+        return $stmt && $stmt->num_rows > 0;
+    }
+
+    public static function incrementUserTokens(int $userId, int $amount): bool
+    {
+        if ($amount <= 0)
+            return false;
+
+        $sql = "UPDATE users SET tokens = tokens + ? WHERE id = ?";
+        $stmt = self::query($sql, [$amount, $userId]);
+
+        if (!$stmt)
+            return false;
+
+        return $stmt->num_rows > 0;
     }
 
     public static function findUserByUsername(string $username): ?array

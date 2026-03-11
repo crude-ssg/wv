@@ -25,6 +25,13 @@ class Auth
         if (!self::isAuthenticated()) {
             throw new UnauthenticatedError("You are not logged in");
         }
+
+        $row = Database::findUserByUsername(self::username());
+        if($row == null) {
+            throw new UnauthenticatedError("You are not logged in");
+        }
+
+        return User::fromArray($row);
     }
 
     public static function isAuthenticated()

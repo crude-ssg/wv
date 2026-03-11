@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . "/ApiData.php";
-
 enum MembershipType: int
 {
     case FREE = 0;
@@ -59,4 +57,10 @@ class VideoData extends ApiData
     public string $prompt;
     public string $timestamp;
     public ?string $thumbnail = null;
+}
+
+class GenEstimate extends ApiData
+{
+    public int $tokens;
+    public int $duration;
 }

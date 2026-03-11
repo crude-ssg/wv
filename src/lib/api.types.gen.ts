@@ -32,3 +32,8 @@ export interface VideoData {
   timestamp: string;
   thumbnail: string | null;
 }
+
+export interface GenEstimate {
+  tokens: number;
+  duration: number;
+}

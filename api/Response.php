@@ -13,8 +13,12 @@ class Response
      * @param array $data Data to send as JSON
      * @param int $status HTTP status code
      */
-    public static function json(array $data, int $status = 200)
+    public static function json(array | ApiData $data, int $status = 200)
     {
+        if($data instanceof ApiData) {
+            $data = $data->toArray();
+        }
+        
         http_response_code($status);
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
