@@ -1,3 +1,4 @@
+import { ProgressBar } from '@/components/primary/progress-bar';
 import { Loader2 } from 'lucide-react';
 
 export function ProcessingState() {
@@ -11,10 +12,7 @@ export function ProcessingState() {
         <h3 className="text-lg font-bold text-brand">Generating your video...</h3>
         <p className="text-sm text-muted">This may take a minute or two.</p>
       </div>
-      <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden mx-auto">
-        <div className="h-full bg-linear-to-r from-accent to-accent-dark w-1/3 animate-[progress_4s_infinite_linear]" 
-             style={{ animationName: 'progress' }} />
-      </div>
+      <ProgressBar pending className='w-64' />
     </div>
   );
 }

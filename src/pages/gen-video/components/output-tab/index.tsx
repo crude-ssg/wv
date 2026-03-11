@@ -52,7 +52,7 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry,
           timestamp: 'Just now'
         };
         setHistory(prev => [newItem, ...prev]);
-      }, 4000);
+      }, 10_000);
     }
   }));
 
