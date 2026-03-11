@@ -1,6 +1,6 @@
 import { ImageIcon, Sparkles } from "lucide-react";
-import { type Mode } from "@/pages/gen-video";
 import { cn } from "@/lib/utils";
+import type { Mode } from "@/lib/api.types.gen";
 
 export function ModeToggle({ mode, onChange }: { mode: Mode; onChange: (m: Mode) => void }) {
   return (

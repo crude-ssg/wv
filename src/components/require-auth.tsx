@@ -1,4 +1,5 @@
-import { getAuthenticatedUser, type User } from "@/lib/api";
+import { getAuthenticatedUser } from "@/lib/api";
+import type { User } from "@/lib/api.types.gen";
 import { Loader2Icon } from "lucide-react";
 import { createContext, useEffect, useState } from "react";
 import { Outlet } from "react-router"

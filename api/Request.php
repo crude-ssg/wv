@@ -7,6 +7,14 @@ if (!defined('API_ENTRY')) {
 
 class Request
 {
+
+    public static function requireMethod(string $method)
+    {
+        if (self::method() != $method) {
+            throw new MethodNotAllowedError(self::method() . " method is not allowed");
+        }
+    }
+
     /**
      * Get HTTP method (GET, POST, etc.)
      */

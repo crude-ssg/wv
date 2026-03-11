@@ -4,8 +4,8 @@ import { ProcessingState } from './processing-state';
 import { ErrorState } from './error-state';
 import { EmptyState } from './empty-state';
 import { HistorySidebar } from './history-sidebar';
-import type { HistoryItem } from './history-sidebar';
-import type { GenSettings } from '../generate-tab';
+import type { GenSettings, VideoData } from '@/lib/api.types.gen';
+import { generateVideo } from '@/lib/api';
 
 export interface OutputTabHandle {
   startGeneration: (settings: GenSettings) => void;
@@ -16,17 +16,17 @@ interface OutputTabProps {
   onProcessingChange?: (isProcessing: boolean) => void;
 }
 
-const MOCK_HISTORY: HistoryItem[] = [
-  { id: '1', url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', prompt: 'Cinematic sunset over mountains', timestamp: '2m ago' },
-  { id: '2', url: 'https://www.w3schools.com/html/mov_bbb.mp4', prompt: 'Cute bunny in the forest', timestamp: '15m ago' },
-  { id: '3', url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', prompt: 'Cyberpunk rainy city street', timestamp: '1h ago' },
+const MOCK_HISTORY: VideoData[] = [
+  { id: 1, url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', prompt: 'Cinematic sunset over mountains', timestamp: '2m ago', thumbnail: null },
+  { id: 2, url: 'https://www.w3schools.com/html/mov_bbb.mp4', prompt: 'Cute bunny in the forest', timestamp: '15m ago', thumbnail: null },
+  { id: 3, url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', prompt: 'Cyberpunk rainy city street', timestamp: '1h ago', thumbnail: null },
 ];
 
 export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry, onProcessingChange }, ref) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [resultVideo, setResultVideo] = useState<string | null>(null);
-  const [history, setHistory] = useState<HistoryItem[]>(MOCK_HISTORY);
+  const [currentVideo, setCurrentVideo] = useState<VideoData | null>(null);
+  const [history, setHistory] = useState<VideoData[]>(MOCK_HISTORY);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -34,25 +34,24 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry,
   }, [isProcessing, onProcessingChange]);
 
   useImperativeHandle(ref, () => ({
-    startGeneration: (settings: GenSettings) => {
+    startGeneration: async (settings: GenSettings) => {
       setIsProcessing(true);
+      setCurrentVideo(null);
       setError(null);
-      
-      // Simulate generation
-      setTimeout(() => {
+
+      try {
+        const resultVideo = await generateVideo(settings)
+        setCurrentVideo(resultVideo);
+        setHistory(prev => [resultVideo, ...prev]);
+      } catch (e) {
+        if (e instanceof Error) {
+          setError(e.message)
+        } else {
+          setError("Unknown error occured")
+        }
+      } finally {
         setIsProcessing(false);
-        const newVideoUrl = 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4';
-        setResultVideo(newVideoUrl);
-        
-        // Add to history
-        const newItem: HistoryItem = {
-          id: Math.random().toString(36).substr(2, 9),
-          url: newVideoUrl,
-          prompt: settings.prompt,
-          timestamp: 'Just now'
-        };
-        setHistory(prev => [newItem, ...prev]);
-      }, 10_000);
+      }
     }
   }));
 
@@ -64,10 +63,10 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry,
           <ProcessingState />
         ) : error ? (
           <ErrorState error={error} onRetry={onRetry} />
-        ) : resultVideo ? (
+        ) : currentVideo ? (
           <div className="flex-1 p-2 md:p-4 flex items-center justify-center min-h-0 overflow-hidden">
             <div className="w-full h-full max-w-5xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden relative bg-black/40">
-              <VideoPlayer src={resultVideo} />
+              <VideoPlayer src={currentVideo.url} />
             </div>
           </div>
         ) : (
@@ -76,10 +75,10 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry,
       </div>
 
       {/* History Sidebar */}
-      <HistorySidebar 
+      <HistorySidebar
         history={history}
-        currentVideoUrl={resultVideo}
-        onSelect={setResultVideo}
+        currentVideo={currentVideo}
+        onSelect={setCurrentVideo}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />

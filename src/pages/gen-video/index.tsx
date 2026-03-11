@@ -2,15 +2,12 @@ import { useState, useRef } from 'react';
 import { PlayCircle, Loader2, Menu, Sparkles } from 'lucide-react';
 import { GradientCard } from '@/components/primary/gradient-card';
 import { Sidebar } from '@/components/sidebar';
-import { GenerateTab, type GenSettings } from '@/pages/gen-video/components/generate-tab';
 import { OutputTab, type OutputTabHandle } from '@/pages/gen-video/components/output-tab';
 import { Pill } from '@/components/primary/pill';
 import { GlowDot } from '@/components/primary/glow-dot';
 import { cn } from "@/lib/utils";
-
-export type Mode = 'T2V' | 'I2V';
-export type AspectRatio = '16:9' | '4:3' | '1:1' | '3:4' | '9:16';
-export type Duration = '5s' | '10s' | '15s';
+import { GenerateTab } from './components/generate-tab';
+import type { GenSettings } from '@/lib/api.types.gen';
 
 export function GenVideoPage() {
   const [activeTab, setActiveTab] = useState<'generate' | 'output'>('generate');

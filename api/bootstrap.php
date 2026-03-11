@@ -6,10 +6,14 @@ if (!defined('API_ENTRY')) {
 }
 
 require_once __DIR__ . "/Logger.php";
+require_once __DIR__ . "/Schemas.php";
+require_once __DIR__ . "/Exceptions.php";
 require_once __DIR__ . "/Database.php";
 require_once __DIR__ . "/Auth.php";
 require_once __DIR__ . "/Request.php";
 require_once __DIR__ . "/Response.php";
+
+ExceptionHandler::setup();
 
 session_start([
     'read_and_close' => true

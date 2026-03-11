@@ -1,30 +1,23 @@
 import { Search, PlayCircle } from 'lucide-react';
 import { cn } from "@/lib/utils";
-
-export interface HistoryItem {
-  id: string;
-  url: string;
-  prompt: string;
-  timestamp: string;
-  thumbnail?: string;
-}
+import type { VideoData } from '@/lib/api.types.gen';
 
 interface HistorySidebarProps {
-  history: HistoryItem[];
-  currentVideoUrl: string | null;
-  onSelect: (url: string) => void;
+  history: VideoData[];
+  currentVideo: VideoData | null;
+  onSelect: (video: VideoData) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
 
-export function HistorySidebar({ 
-  history, 
-  currentVideoUrl, 
-  onSelect, 
-  searchQuery, 
-  onSearchChange 
+export function HistorySidebar({
+  history,
+  currentVideo,
+  onSelect,
+  searchQuery,
+  onSearchChange
 }: HistorySidebarProps) {
-  const filteredHistory = history.filter(item => 
+  const filteredHistory = history.filter(item =>
     item.prompt.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -51,11 +44,11 @@ export function HistorySidebar({
             {filteredHistory.map((item) => (
               <button
                 key={item.id}
-                onClick={() => onSelect(item.url)}
+                onClick={() => onSelect(item)}
                 className={cn(
                   "w-full text-left p-2 rounded-xl border transition-all duration-200 group relative overflow-hidden",
-                  currentVideoUrl === item.url 
-                    ? "bg-accent/10 border-accent/20" 
+                  currentVideo?.id === item.id
+                    ? "bg-accent/10 border-accent/20"
                     : "bg-transparent border-transparent hover:bg-white/5 hover:border-white/10"
                 )}
               >

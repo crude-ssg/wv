@@ -1,15 +1,7 @@
 import { useState } from 'react';
 import { ModeToggle } from './mode-toggle';
 import { PromptInput } from './prompt-input';
-import type { Mode, AspectRatio, Duration } from '@/pages/gen-video';
-
-export interface GenSettings {
-  mode: Mode;
-  prompt: string;
-  negativePrompt: string;
-  aspectRatio: AspectRatio;
-  duration: Duration;
-}
+import type { GenSettings, Mode, AspectRatio, Duration } from '@/lib/api.types.gen';
 
 interface GenerateTabProps {
   onGenerate: (settings: GenSettings) => void;

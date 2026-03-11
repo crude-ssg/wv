@@ -21,6 +21,10 @@ class Response
         exit();
     }
 
+    public static function errorJson() {
+
+    }
+
     /**
      * Send an HTML response and exit.
      *

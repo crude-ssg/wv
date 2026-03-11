@@ -23,10 +23,7 @@ class Auth
     public static function requireAuth()
     {
         if (!self::isAuthenticated()) {
-            Response::json([
-                'status' => 'Unauthorized',
-                'message' => 'You are not logged in',
-            ], 401);
+            throw new UnauthenticatedError("You are not logged in");
         }
     }
 

@@ -4,8 +4,8 @@ import { FieldLabel } from "@/components/primary/field-label";
 import { I2VImagePicker } from "@/pages/gen-video/components/generate-tab/i2v-image-picker";
 import { PrimaryButton } from "@/components/primary/primary-button";
 import { DropdownSelector } from "@/components/primary/dropdown-selector";
-import { type Mode, type AspectRatio, type Duration } from "@/pages/gen-video";
 import { cn } from "@/lib/utils";
+import type { AspectRatio, Duration, Mode } from "@/lib/api.types.gen";
 
 interface PromptInputProps {
   mode: Mode;
