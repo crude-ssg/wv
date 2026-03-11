@@ -3,7 +3,8 @@ import { GlowDot } from "@/components/primary/glow-dot";
 import { NavItem } from "@/components/primary/nav-item";
 import { Pill } from "@/components/primary/pill";
 import { CreditsCard } from "@/components/credits-card";
-import { cn } from "@/lib/utils";
+import { cn, inverseLerp } from "@/lib/utils";
+import { useAuth } from "@/lib/use-auth";
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -12,11 +13,14 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
+
+  const { user } = useAuth()
+
   return (
     <>
       {/* Mobile Backdrop */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
           onClick={onClose}
         />
@@ -31,7 +35,7 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
       >
         <div className="mb-10 px-1 flex items-center justify-between">
           <Pill variant="default"><GlowDot />BabeGen</Pill>
-          <button 
+          <button
             onClick={onClose}
             className="lg:hidden p-2 text-muted hover:text-brand transition-colors"
           >
@@ -41,12 +45,13 @@ export function Sidebar({ isOpen, onClose, className }: SidebarProps) {
 
         <nav className="flex-1 space-y-1">
           <NavItem icon={<LayoutDashboard size={18} />} label="Dashboard" active />
-          <NavItem icon={<Compass size={18} />}         label="Explore" />
-          <NavItem icon={<BookOpen size={18} />}        label="My Library" />
-          <NavItem icon={<Settings2 size={18} />}       label="Settings" />
+          <NavItem icon={<Compass size={18} />} label="Explore" />
+          <NavItem icon={<BookOpen size={18} />} label="My Library" />
+          <NavItem icon={<Settings2 size={18} />} label="Settings" />
         </nav>
 
-        <CreditsCard used={74} total={1240} />
+        <Pill variant="accent"><GlowDot />@{user.username}</Pill>
+        <CreditsCard used={inverseLerp(0, 10000, user.tokens) * 100} total={user.tokens} />
       </aside>
     </>
   );

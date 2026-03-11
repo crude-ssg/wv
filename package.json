@@ -8,8 +8,11 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "upload": "npm run build && rsync -avz --delete dist/ $UPLOAD_DESTINATION",
-    "upload:dev": "vite build --minify false && rsync -avz --delete dist/ $UPLOAD_DESTINATION"
+    "sync": "pnpm sync:app && pnpm run sync:api",
+    "watch:api": "chokidar \"api/**/*\" -c \"pnpm sync:api\"",
+    "watch:app": "chokidar \"src/**/*\" -c \"pnpm sync:app\"",
+    "sync:app": "pnpm build && rsync -avz --delete --exclude='api/' dist/ $UPLOAD_DESTINATION",
+    "sync:api": "rsync -avz --delete api/ $UPLOAD_DESTINATION/api"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",
@@ -27,6 +30,7 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
+    "chokidar-cli": "^3.0.0",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",

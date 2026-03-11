@@ -27,7 +27,7 @@ export function GenVideoPage() {
   };
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-bg">
+    <div className="flex h-screen w-full bg-bg">
       <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
       <main className="flex-1 overflow-y-auto flex flex-col items-center relative">

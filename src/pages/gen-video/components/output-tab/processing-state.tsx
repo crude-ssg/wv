@@ -12,7 +12,7 @@ export function ProcessingState() {
         <p className="text-sm text-muted">This may take a minute or two.</p>
       </div>
       <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden mx-auto">
-        <div className="h-full bg-linear-to-r from-accent to-accent-dark w-1/3 animate-[progress_3s_infinite_linear]" 
+        <div className="h-full bg-linear-to-r from-accent to-accent-dark w-1/3 animate-[progress_4s_infinite_linear]" 
              style={{ animationName: 'progress' }} />
       </div>
     </div>
