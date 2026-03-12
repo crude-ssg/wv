@@ -22,21 +22,18 @@ class Auth
      */
     public static function requireAuth()
     {
-        if (!self::isAuthenticated()) {
+
+        $username = self::username();
+        if ($username == null) {
             throw new UnauthenticatedError("You are not logged in");
         }
 
-        $row = Database::findUserByUsername(self::username());
+        $row = Database::findUserByUsername($username);
         if($row == null) {
             throw new UnauthenticatedError("You are not logged in");
         }
 
         return User::fromArray($row);
-    }
-
-    public static function isAuthenticated()
-    {
-        return self::username() != null;
     }
 
     public static function username()
