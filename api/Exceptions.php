@@ -26,9 +26,37 @@ class NotFoundError extends ApiError
     protected int $status = 404;
 }
 
+class ErrorBag {
+    private array $errors = [];
+
+    public function add(string $field, string $message) {
+        $this->errors[$field][] = $message;
+    }
+
+    public function toArray(): array {
+        return $this->errors;
+    }
+
+    public function hasErrors(): bool {
+        return !empty($this->errors);
+    }
+}
+
 class ValidationError extends ApiError
 {
     protected int $status = 400;
+    protected ErrorBag $validation_errors;
+
+    public function __construct(string $message, ?ErrorBag $errors = null) {
+        parent::__construct($message);
+        $this->validation_errors = $errors ?? new ErrorBag();
+    }
+
+    public function toArray(): array {
+        $response = parent::toArray();
+        $response['error']['validation_errors'] = $this->validation_errors->toArray();
+        return $response;
+    }
 }
 
 class UnauthenticatedError extends ApiError
