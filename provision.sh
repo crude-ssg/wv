@@ -61,15 +61,9 @@ CHECKPOINT_MODELS=(
 )
 
 UNET_MODELS=(
-    "https://civitai.com/api/download/models/2609141?type=Model&format=SafeTensor&size=full&fp=fp16"
-    "https://civitai.com/api/download/models/2609148?type=Model&format=SafeTensor&size=full&fp=fp8"  
 )
 
 LORA_MODELS=(
-    "https://huggingface.co/Kijai/WanVideo_comfy/blob/main/LoRAs/Stable-Video-Infinity/v2.0/SVI_v2_PRO_Wan2.2-I2V-A14B_HIGH_lora_rank_128_fp16.safetensors" # svi lora
-    "https://huggingface.co/Kijai/WanVideo_comfy/blob/main/LoRAs/Stable-Video-Infinity/v2.0/SVI_v2_PRO_Wan2.2-I2V-A14B_LOW_lora_rank_128_fp16.safetensors"
-    "https://civitai.com/api/download/models/2361379?type=Model&format=SafeTensor" #lighting lora: https://civitai.com/models/1585622/lightning-lora-massive-speed-up-for-wan21-wan22-made-by-lightx2v-kijai
-    "https://civitai.com/api/download/models/2337903?type=Model&format=SafeTensor" 
 )
 
 VAE_MODELS=(
