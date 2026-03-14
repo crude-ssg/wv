@@ -20,6 +20,6 @@ if ($user->tokens - $estimate->tokens < 0) {
     throw new InsufficientTokensError();
 }
 
-$video = VideoGenerator::generate($settings); // LONG RUNNING
-Database::deductUserTokens($user->id, $estimate->tokens);
+$video = VideoGenerator::generate($settings, $user);
+// Database::deductUserTokens($user->id, $estimate->tokens); // commented out so we don't have to keep replenishing tokens when testing
 Response::json($video);

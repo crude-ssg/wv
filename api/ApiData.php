@@ -39,8 +39,16 @@ abstract class ApiData
             $propType = $reflection->getType()?->getName() ?? null;
 
             // Handle nested ApiData
-            if ($propType && class_exists($propType) && is_subclass_of($propType, ApiData::class) && is_array($value)) {
-                $obj->$key = $propType::fromArray($value);
+            if ($propType && class_exists($propType) && is_subclass_of($propType, ApiData::class)) {
+                if(is_string($value)) {
+                    $value = json_decode($value, true);
+                }
+
+                if(is_array($value)) {
+                    $obj->$key = $propType::fromArray($value);
+                } else {
+                    throw new InternalServerError("Invalid value for property {$key}");
+                }
             }
             // Handle backed enums (int or string)
             elseif ($propType && enum_exists($propType) && is_subclass_of($propType, \BackedEnum::class)) {

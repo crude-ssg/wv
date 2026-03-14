@@ -1,5 +1,5 @@
 # GPU Instance Template:
-https://cloud.vast.ai/template/readme/7ce69ac05cf04c98e891ebeaf72de003
+https://cloud.vast.ai/?ref_id=428331&creator_id=428331&name=ComfyUI%20-%20Wan%202.2%20I2V%2FT2V%20-%204090
 
 **Note:** All the models and loras can be downloaded directly in comfy ui, just copy the urls and paste it in the corresponding downloader, please make sure to choose the correct path on the downloader, for models the directory is `unet` and for loras the directory is `loras`. for reference these are located in the `ComfyUI/models` directory. if you made a mistake and need to move them around, you can use the `mv` command in the terminal, eg: `mv ComfyUI/models/unet/model.safetensors ComfyUI/models/loras/`.
 
@@ -35,3 +35,15 @@ This needs a few more things to setup but should be faster.
 
 # Reference:
 Got all of this from putting together info on [this](https://civitai.com/models/2079192?modelVersionId=2668801) page and some of the pages/links referenced there
+
+## ✅ Strengths
+- Best solution for making long videos
+- Excellent transitions between video segments
+- Reduced degradation compared to other solutions
+- Strong character coherence: the model retains information from the previous video, helping maintain consistency
+
+## ⚠️ Weaknesses
+- Weaker prompt understanding
+- Weaker camera understanding
+- Videos are less dynamic
+- Sometimes slow-motion effect (can be improved with proper Lightning LoRAs and dynamic prompts)

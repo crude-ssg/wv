@@ -17,11 +17,13 @@ class VideoGenerator
         return $estimate;
     }
 
-    private static function estimateCost(GenSettings $settings) {
+    private static function estimateCost(GenSettings $settings)
+    {
         return 200;
     }
 
-    private static function estimateDuration(GenSettings $settings) {
+    private static function estimateDuration(GenSettings $settings)
+    {
         return 60;
     }
 
@@ -31,20 +33,53 @@ class VideoGenerator
      * 
      * @return VideoData
      */
-    public static function generate(GenSettings $settings): VideoData
+    public static function generate(GenSettings $settings, User $user)
     {
-        sleep(5);
+        $workflow = new Workflow('i2v-autoprompt-workflow-api.json');
+        $workflow = $workflow->build($settings);
+        
+        $video_id = uniqid();
+        $response = Http::create()
+            ->throwOnError()
+            ->url('http://72.134.81.13:40894/generate')
+            ->timeout(600)
+            ->bearerToken('8770146493c08cfbb5ff0e737d69e45f5b88e2bf55c15ef2d42c3d60fe749e90')
+            ->json([
+                "input" => [
+                    'workflow_json' => $workflow,
+                    'webhook' => [
+                        'url' => Config::get('base_api_url') . "/webhook/?video_id=" . $video_id
+                    ]
+                ]
+            ])
+            ->post();
+        
+        if($response->failed()) {
+            throw new GenerateError("Failed to generate video");
+        }
+        
+        if($response->json('status') == 'failed') {
+            throw new GenerateError("Failed to generate video", previous: new InternalServerError($response->body()));
+        }
 
         $result = new VideoData();
-        $result->id = 10000;
-        $result->prompt = $settings->prompt;
+        $result->id = $video_id;
+        $result->user_id = $user->id;
+        $result->job_id = $response->json('id');
+        $result->job_status = VideoStatus::from($response->json('status'));
+        $result->prompt = $settings;
         $result->url = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
-        $result->timestamp = (new DateTime())->getTimestamp();
+        $result->timestamp = (new DateTime())->format('Y-m-d H:i:s');
+        $result->filepath = null;
+        $result->url = null;
         $result->thumbnail = null;
+        VideoData::save($result);
+
         return $result;
     }
 
-    public static function hasPendingJob(User $user) {
+    public static function hasPendingJob(User $user)
+    {
         return false;
     }
 }

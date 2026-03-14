@@ -5,7 +5,7 @@ import { ErrorState } from './error-state';
 import { EmptyState } from './empty-state';
 import { HistorySidebar } from './history-sidebar';
 import type { GenSettings, VideoData } from '@/lib/api.types.gen';
-import { generateVideo } from '@/lib/api';
+import { generateVideo, getHistory, status } from '@/lib/api';
 
 export interface OutputTabHandle {
   startGeneration: (settings: GenSettings) => void;
@@ -17,9 +17,6 @@ interface OutputTabProps {
 }
 
 const MOCK_HISTORY: VideoData[] = [
-  { id: 1, url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', prompt: 'Cinematic sunset over mountains', timestamp: '2m ago', thumbnail: null },
-  { id: 2, url: 'https://www.w3schools.com/html/mov_bbb.mp4', prompt: 'Cute bunny in the forest', timestamp: '15m ago', thumbnail: null },
-  { id: 3, url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', prompt: 'Cyberpunk rainy city street', timestamp: '1h ago', thumbnail: null },
 ];
 
 export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry, onProcessingChange }, ref) => {
@@ -32,6 +29,30 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry,
   useEffect(() => {
     onProcessingChange?.(isProcessing);
   }, [isProcessing, onProcessingChange]);
+
+  useEffect(() => {
+    pollState()
+    const interval = setInterval(pollState, 10_000)
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    if(currentVideo?.job_status == 'completed' || currentVideo?.job_status == 'failed') {
+      setIsProcessing(false)
+    } else {
+      setIsProcessing(true)
+    }
+  }, [currentVideo])
+
+  async function pollState() {
+    if (currentVideo != null) {
+      const videoStatus = await status(currentVideo.id)
+      setCurrentVideo(videoStatus)
+    }
+
+    const latestHistory = await getHistory()
+    setHistory(latestHistory)
+  }
 
   useImperativeHandle(ref, () => ({
     startGeneration: async (settings: GenSettings) => {
@@ -64,11 +85,17 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry,
         ) : error ? (
           <ErrorState error={error} onRetry={onRetry} />
         ) : currentVideo ? (
-          <div className="flex-1 p-2 md:p-4 flex items-center justify-center min-h-0 overflow-hidden">
-            <div className="w-full h-full max-w-5xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden relative bg-black/40">
-              <VideoPlayer src={currentVideo.url} />
+          currentVideo.job_status === 'completed' ? (
+            <div className="flex-1 p-2 md:p-4 flex items-center justify-center min-h-0 overflow-hidden">
+              <div className="w-full h-full max-w-5xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden relative bg-black/40">
+                <VideoPlayer src={currentVideo.url!} />
+              </div>
             </div>
-          </div>
+          ) : currentVideo.job_status === 'failed' ? (
+            <ErrorState error="This video generation task failed to complete." onRetry={onRetry} />
+          ) : (
+            <ProcessingState />
+          )
         ) : (
           <EmptyState />
         )}

@@ -64,6 +64,11 @@ class UnauthenticatedError extends ApiError
     protected int $status = 401;
 }
 
+class UnauthorizedError extends ApiError
+{
+    protected int $status = 403;
+}
+
 class MethodNotAllowedError extends ApiError
 {
     protected int $status = 405;
@@ -79,6 +84,10 @@ class GenerateAlreadyPendingError extends ApiError
     protected int $status = 400;
 }
 
+class GenerateError extends ApiError {
+    protected int $status = 500;
+}
+
 class InternalServerError extends ApiError
 {
     protected int $status = 500;
@@ -87,7 +96,7 @@ class InternalServerError extends ApiError
     {
         $response = parent::toArray();
         if ($this->getPrevious()) {
-            $response["error"]["trace"] = $this->getPrevious()->getTrace();
+            $response["error"]["trace"] = substr($this->getPrevious()->getTraceAsString(), 0, 500);
             $response["error"]["line"] = $this->getPrevious()->getLine();
             $response["error"]["file"] = $this->getPrevious()->getFile();
             $response["error"]["code"] = $this->getPrevious()->getCode();

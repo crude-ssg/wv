@@ -1,0 +1,1483 @@
+{
+  "97": {
+    "inputs": {
+      "image": "2026-03-03.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "174": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1278",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "1LORA HIGH"
+    }
+  },
+  "175": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1281",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "1LORA LOW"
+    }
+  },
+  "179": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1278",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "2LORA HIGH"
+    }
+  },
+  "180": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1281",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "3LORA LOW"
+    }
+  },
+  "181": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1281",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "2LORA LOW"
+    }
+  },
+  "182": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1278",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "3LORA HIGH"
+    }
+  },
+  "604": {
+    "inputs": {
+      "value": 1.15
+    },
+    "class_type": "FloatConstant",
+    "_meta": {
+      "title": "motion amplitude"
+    }
+  },
+  "605": {
+    "inputs": {
+      "value": 5
+    },
+    "class_type": "INTConstant",
+    "_meta": {
+      "title": "motion_frames"
+    }
+  },
+  "916": {
+    "inputs": {
+      "vae_name": "wan_2.1_vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "919": {
+    "inputs": {
+      "unet_name": "wan22RemixI2VGGUFV21_highQ6K.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF) HIGH"
+    }
+  },
+  "920": {
+    "inputs": {
+      "unet_name": "wan22RemixI2VGGUFV21_lowQ6K.gguf"
+    },
+    "class_type": "UnetLoaderGGUF",
+    "_meta": {
+      "title": "Unet Loader (GGUF) LOW"
+    }
+  },
+  "1037": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1281",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "4LORA LOW"
+    }
+  },
+  "1040": {
+    "inputs": {
+      "PowerLoraLoaderHeaderWidget": {
+        "type": "PowerLoraLoaderHeaderWidget"
+      },
+      "➕ Add Lora": "",
+      "model": [
+        "1252:1278",
+        0
+      ]
+    },
+    "class_type": "Power Lora Loader (rgthree)",
+    "_meta": {
+      "title": "4LORA HIGH"
+    }
+  },
+  "1282": {
+    "inputs": {
+      "Xi": 81,
+      "Xf": 81,
+      "isfloatX": 0
+    },
+    "class_type": "mxSlider",
+    "_meta": {
+      "title": "Lenght"
+    }
+  },
+  "1283": {
+    "inputs": {
+      "Xi": 5,
+      "Xf": 5,
+      "isfloatX": 0
+    },
+    "class_type": "mxSlider",
+    "_meta": {
+      "title": "Steps"
+    }
+  },
+  "1327": {
+    "inputs": {
+      "frame_rate": 16,
+      "loop_count": 0,
+      "filename_prefix": "wan22_14_08-20-35",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "1533",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "16FPS"
+    }
+  },
+  "1445": {
+    "inputs": {
+      "desired_width": 480,
+      "desired_height": 832,
+      "divisible_by": 16,
+      "upscale": false,
+      "upscale_method": "lanczos",
+      "small_image_mode": "none",
+      "pad_color": "#000000",
+      "image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "FindPerfectResolution",
+    "_meta": {
+      "title": "Find Perfect Resolution"
+    }
+  },
+  "1480": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "SamplerSelector",
+    "_meta": {
+      "title": "Sampler Selector"
+    }
+  },
+  "1481": {
+    "inputs": {
+      "scheduler": "simple"
+    },
+    "class_type": "SchedulerSelector",
+    "_meta": {
+      "title": "Scheduler Selector"
+    }
+  },
+  "1521": {
+    "inputs": {
+      "clip_name": "nsfw_wan_umt5-xxl_fp8_scaled.safetensors",
+      "type": "wan",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "1533": {
+    "inputs": {
+      "resize_to": "2x",
+      "resize_width": 1024,
+      "resize_height": 1024,
+      "images": [
+        "1546",
+        0
+      ],
+      "upscaler_trt_model": [
+        "1534",
+        0
+      ]
+    },
+    "class_type": "UpscalerTensorrt",
+    "_meta": {
+      "title": "Upscaler Tensorrt ⚡"
+    }
+  },
+  "1534": {
+    "inputs": {
+      "model": "4x-UltraSharp",
+      "precision": "fp16"
+    },
+    "class_type": "LoadUpscalerTensorrtModel",
+    "_meta": {
+      "title": "Load Upscale Tensorrt Model"
+    }
+  },
+  "1546": {
+    "inputs": {
+      "method": "reinhard",
+      "strength": 0.6,
+      "multithread": true,
+      "image_ref": [
+        "97",
+        0
+      ],
+      "image_target": [
+        "1344:1253",
+        0
+      ]
+    },
+    "class_type": "ColorMatch",
+    "_meta": {
+      "title": "Color Match"
+    }
+  },
+  "1547": {
+    "inputs": {
+      "frame_rate": 16,
+      "loop_count": 0,
+      "filename_prefix": "wan22_14_08-20-35",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 19,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": false,
+      "images": [
+        "1546",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "Final Video"
+    }
+  },
+  "1551": {
+    "inputs": {
+      "value": 8
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Sigma Shift"
+    }
+  },
+  "1592": {
+    "inputs": {
+      "text": "(At 0 seconds: A photorealistic close-up of a man with dark brown hair, wearing black-framed glasses and a gray t-shirt. He smiles subtly at the camera as soft natural light from an unseen window illuminates his face.) (At 1 seconds: The background blurs slightly while maintaining depth-of-field focus on him; behind him is a warm-toned interior wall with faint architectural details visible in bokeh.) (At 2 seconds: His gaze remains locked directly at the viewer, eyes reflecting subtle ambient light. A slight breeze lifts his hair strands near his forehead and temple.) (At 3 seconds: The camera holds steady as he subtly tilts his head a fraction to one side while continuing his gentle smile.) (At 4 seconds: Ambient lighting casts soft shadows under his glasses’ frame; the texture of his beard is crisp with natural skin pores visible in high detail.) (At 5 seconds: His expression remains calm and composed, conveying quiet confidence as he holds direct eye contact for a final moment.)",
+      "anything": [
+        "1581:1566",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Prompt 1"
+    }
+  },
+  "1593": {
+    "inputs": {
+      "text": "(At 0 seconds: The same man maintains an unwavering gaze into the camera lens under consistent warm indoor lighting. He wears his black-framed glasses with slight reflections catching on the lenses.) (At 1 seconds: His gray t-shirt fabric shows subtle wrinkles around the collar and shoulders, suggesting relaxed posture without movement.) (At 2 seconds: Behind him, a blurred green plant silhouette is visible to the left edge of frame; background remains softly out-of-focus.) (At 3 seconds: A faint shadow from an unseen object falls across his right cheek as lighting shifts imperceptibly with ambient room conditions.) (At 4 seconds: His facial expression holds steady—lips slightly parted, eyes soft and engaging—with no change in emotion or pose during this frame duration.) (At 5 seconds: The camera remains fixed on a tight portrait composition; natural light continues to highlight his skin texture while shadows define jawline contours.)",
+      "anything": [
+        "1581:1566",
+        1
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Prompt 2"
+    }
+  },
+  "1594": {
+    "inputs": {
+      "text": "(At 0 seconds: A photorealistic medium close-up of the same man, still wearing black-framed glasses and gray t-shirt. He has slightly parted lips as if about to speak or mid-breath.) (At 1 seconds: The background reveals more interior detail—a textured beige wall with faint vertical lines suggesting architectural molding—still blurred but discernible in bokeh effect.) (At 2 seconds: His eyes remain fixed on the viewer, pupils dilated just enough for natural depth and realism under soft illumination from behind his left shoulder.) (At 3 seconds: A slight motion blur appears around one eye as he blinks naturally; hair strands shift subtly due to micro-movement within frame duration.) (At 4 seconds: The lighting accentuates the fine lines near his nose bridge, adding dimensionality without artificial enhancement.) (At 5 seconds: He maintains a neutral yet expressive facial expression while keeping direct contact with viewer’s gaze for sustained emotional connection.)",
+      "anything": [
+        "1581:1566",
+        2
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Prompt 3"
+    }
+  },
+  "1595": {
+    "inputs": {
+      "text": "(At 0 seconds: A photorealistic portrait of the man smiling softly at camera; black-framed glasses reflect ambient light subtly. His gray t-shirt shows natural fabric texture and slight creases.) (At 1 seconds: Behind him, a shallow depth-of-field reveals warm-toned interior with blurred architectural elements—window frame or doorway visible on far left edge.) (At 2 seconds: Soft shadows fall across his cheeks from angled lighting above; skin pores are rendered in extreme detail for realism.) (At 3 seconds: His gaze remains unwavering, eyes slightly crinkled at the corners due to genuine smile expression rather than forced grin.) (At 4 seconds: Camera holds steady without movement as he subtly leans forward just enough to create slight compression of facial features within frame.) (At 5 seconds: The overall composition retains intimate portrait framing; lighting remains consistent and naturalistic, emphasizing authentic human presence in calm setting.)",
+      "anything": [
+        "1581:1566",
+        3
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Prompt 4"
+    }
+  },
+  "1581:1566": {
+    "inputs": {
+      "text": [
+        "1581:1622",
+        0
+      ],
+      "auto_split": true,
+      "custom_delimiter": ""
+    },
+    "class_type": "StorySplitNode",
+    "_meta": {
+      "title": "Story Split Node"
+    }
+  },
+  "1581:1564": {
+    "inputs": {
+      "model_name": "Qwen3-VL-8B-Instruct-c_abliterated-v3.Q8_0.gguf",
+      "device": "auto",
+      "preset_prompt": "🎬 Wan 2.2 NSFW I2V Timeline (20s)",
+      "custom_prompt": "",
+      "max_tokens": 1536,
+      "temperature": 0.6,
+      "top_p": 0.9,
+      "repetition_penalty": 1.2,
+      "frame_count": 16,
+      "ctx": 65536,
+      "n_batch": 512,
+      "gpu_layers": -1,
+      "image_max_tokens": 4096,
+      "top_k": 0,
+      "pool_size": 4194304,
+      "keep_model_loaded": false,
+      "seed": 2497013373,
+      "keep_last_prompt": false,
+      "image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "AILab_QwenVL_GGUF_Advanced",
+    "_meta": {
+      "title": "QwenVL-Mod Advanced (GGUF)"
+    }
+  },
+  "1581:1621": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "LoRaS Triggers"
+    }
+  },
+  "1581:1622": {
+    "inputs": {
+      "delimiter": "",
+      "clean_whitespace": "false",
+      "text_a": [
+        "1581:1621",
+        0
+      ],
+      "text_b": [
+        "1581:1564",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "1252:1249": {
+    "inputs": {
+      "samples": [
+        "1252:1604",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1252:1245": {
+    "inputs": {
+      "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "1252:1278": {
+    "inputs": {
+      "sage_attention": "auto",
+      "allow_compile": false,
+      "model": [
+        "919",
+        0
+      ]
+    },
+    "class_type": "PathchSageAttentionKJ",
+    "_meta": {
+      "title": "Patch Sage Attention KJ"
+    }
+  },
+  "1252:1281": {
+    "inputs": {
+      "sage_attention": "auto",
+      "allow_compile": false,
+      "model": [
+        "920",
+        0
+      ]
+    },
+    "class_type": "PathchSageAttentionKJ",
+    "_meta": {
+      "title": "Patch Sage Attention KJ"
+    }
+  },
+  "1252:1250": {
+    "inputs": {
+      "seed": 716130969132038
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "1-Seed high"
+    }
+  },
+  "1252:1258": {
+    "inputs": {
+      "text": [
+        "1252:1299",
+        0
+      ],
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive encode"
+    }
+  },
+  "1252:1299": {
+    "inputs": {
+      "text": "(At 0 seconds: A photorealistic close-up of a man with dark brown hair, wearing black-framed glasses and a gray t-shirt. He smiles subtly at the camera as soft natural light from an unseen window illuminates his face.) (At 1 seconds: The background blurs slightly while maintaining depth-of-field focus on him; behind him is a warm-toned interior wall with faint architectural details visible in bokeh.) (At 2 seconds: His gaze remains locked directly at the viewer, eyes reflecting subtle ambient light. A slight breeze lifts his hair strands near his forehead and temple.) (At 3 seconds: The camera holds steady as he subtly tilts his head a fraction to one side while continuing his gentle smile.) (At 4 seconds: Ambient lighting casts soft shadows under his glasses’ frame; the texture of his beard is crisp with natural skin pores visible in high detail.) (At 5 seconds: His expression remains calm and composed, conveying quiet confidence as he holds direct eye contact for a final moment.)",
+      "anything": [
+        "1252:1301",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Final prompt preview"
+    }
+  },
+  "1252:1604": {
+    "inputs": {
+      "cleanup_mode": "Text Encoder",
+      "input": [
+        "1252:1284",
+        0
+      ]
+    },
+    "class_type": "VRAMCleanup",
+    "_meta": {
+      "title": "VRAM Cleanup"
+    }
+  },
+  "1252:1284": {
+    "inputs": {
+      "boundary": 0.9,
+      "add_noise": "enable",
+      "noise_seed": [
+        "1252:1250",
+        0
+      ],
+      "steps": [
+        "1283",
+        0
+      ],
+      "cfg_high_noise": 1,
+      "cfg_low_noise": 1,
+      "sampler_name": [
+        "1480",
+        0
+      ],
+      "scheduler": [
+        "1481",
+        0
+      ],
+      "sigma_shift": [
+        "1551",
+        0
+      ],
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model_high_noise": [
+        "174",
+        0
+      ],
+      "model_low_noise": [
+        "175",
+        0
+      ],
+      "positive": [
+        "1252:1623",
+        0
+      ],
+      "negative": [
+        "1252:1623",
+        1
+      ],
+      "latent_image": [
+        "1252:1623",
+        2
+      ]
+    },
+    "class_type": "WanMoeKSamplerAdvanced",
+    "_meta": {
+      "title": "Wan MoE KSampler (Advanced)"
+    }
+  },
+  "1252:1300": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "LoRaS Triggers"
+    }
+  },
+  "1252:1301": {
+    "inputs": {
+      "delimiter": "",
+      "clean_whitespace": "false",
+      "text_a": [
+        "1252:1300",
+        0
+      ],
+      "text_b": [
+        "1592",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "1252:1623": {
+    "inputs": {
+      "width": [
+        "1445",
+        0
+      ],
+      "height": [
+        "1445",
+        1
+      ],
+      "length": [
+        "1282",
+        0
+      ],
+      "batch_size": 1,
+      "motion_amplitude": [
+        "604",
+        0
+      ],
+      "positive": [
+        "1252:1258",
+        0
+      ],
+      "negative": [
+        "1252:1245",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ],
+      "start_image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "PainterI2V",
+    "_meta": {
+      "title": "PainterI2V"
+    }
+  },
+  "1262:1256": {
+    "inputs": {
+      "width": [
+        "1445",
+        0
+      ],
+      "height": [
+        "1445",
+        1
+      ],
+      "length": [
+        "1282",
+        0
+      ],
+      "batch_size": 1,
+      "motion_frames": [
+        "605",
+        0
+      ],
+      "motion_amplitude": [
+        "604",
+        0
+      ],
+      "positive": [
+        "1262:1268",
+        0
+      ],
+      "negative": [
+        "1262:1259",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ],
+      "previous_video": [
+        "1262:1260",
+        0
+      ],
+      "initial_reference_image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "PainterLongVideo",
+    "_meta": {
+      "title": "2-PainterLongVideo"
+    }
+  },
+  "1262:1258": {
+    "inputs": {
+      "samples": [
+        "1262:1605",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1262:1261": {
+    "inputs": {
+      "indexes": "-1",
+      "err_if_missing": true,
+      "err_if_empty": true,
+      "image": [
+        "1252:1249",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectImages",
+    "_meta": {
+      "title": "Select Images 🎥🅥🅗🅢"
+    }
+  },
+  "1262:1253": {
+    "inputs": {
+      "inputcount": 2,
+      "Update inputs": null,
+      "image_1": [
+        "1252:1249",
+        0
+      ],
+      "image_2": [
+        "1262:1258",
+        0
+      ]
+    },
+    "class_type": "ImageBatchMulti",
+    "_meta": {
+      "title": "Image Batch Multi"
+    }
+  },
+  "1262:1259": {
+    "inputs": {
+      "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "1262:1260": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "scale_by": 2,
+      "image": [
+        "1262:1261",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "1262:1268": {
+    "inputs": {
+      "text": [
+        "1262:1269",
+        0
+      ],
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive encode"
+    }
+  },
+  "1262:1287": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "LoRaS Triggers"
+    }
+  },
+  "1262:1288": {
+    "inputs": {
+      "delimiter": "",
+      "clean_whitespace": "false",
+      "text_a": [
+        "1262:1287",
+        0
+      ],
+      "text_b": [
+        "1593",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "1262:1269": {
+    "inputs": {
+      "text": "(At 0 seconds: The same man maintains an unwavering gaze into the camera lens under consistent warm indoor lighting. He wears his black-framed glasses with slight reflections catching on the lenses.) (At 1 seconds: His gray t-shirt fabric shows subtle wrinkles around the collar and shoulders, suggesting relaxed posture without movement.) (At 2 seconds: Behind him, a blurred green plant silhouette is visible to the left edge of frame; background remains softly out-of-focus.) (At 3 seconds: A faint shadow from an unseen object falls across his right cheek as lighting shifts imperceptibly with ambient room conditions.) (At 4 seconds: His facial expression holds steady—lips slightly parted, eyes soft and engaging—with no change in emotion or pose during this frame duration.) (At 5 seconds: The camera remains fixed on a tight portrait composition; natural light continues to highlight his skin texture while shadows define jawline contours.)",
+      "anything": [
+        "1262:1288",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Final prompt preview"
+    }
+  },
+  "1262:308": {
+    "inputs": {
+      "seed": 398571699184819
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "2-Seed high"
+    }
+  },
+  "1262:1282": {
+    "inputs": {
+      "boundary": 0.9,
+      "add_noise": "enable",
+      "noise_seed": [
+        "1262:308",
+        0
+      ],
+      "steps": [
+        "1283",
+        0
+      ],
+      "cfg_high_noise": 1,
+      "cfg_low_noise": 1,
+      "sampler_name": [
+        "1480",
+        0
+      ],
+      "scheduler": [
+        "1481",
+        0
+      ],
+      "sigma_shift": [
+        "1551",
+        0
+      ],
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model_high_noise": [
+        "179",
+        0
+      ],
+      "model_low_noise": [
+        "181",
+        0
+      ],
+      "positive": [
+        "1262:1256",
+        0
+      ],
+      "negative": [
+        "1262:1256",
+        1
+      ],
+      "latent_image": [
+        "1262:1256",
+        2
+      ]
+    },
+    "class_type": "WanMoeKSamplerAdvanced",
+    "_meta": {
+      "title": "Wan MoE KSampler (Advanced)"
+    }
+  },
+  "1262:1605": {
+    "inputs": {
+      "cleanup_mode": "Text Encoder",
+      "input": [
+        "1262:1282",
+        0
+      ]
+    },
+    "class_type": "VRAMCleanup",
+    "_meta": {
+      "title": "VRAM Cleanup"
+    }
+  },
+  "1332:1259": {
+    "inputs": {
+      "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "1332:1253": {
+    "inputs": {
+      "inputcount": 2,
+      "Update inputs": null,
+      "image_1": [
+        "1262:1253",
+        0
+      ],
+      "image_2": [
+        "1332:1258",
+        0
+      ]
+    },
+    "class_type": "ImageBatchMulti",
+    "_meta": {
+      "title": "Image Batch Multi"
+    }
+  },
+  "1332:1260": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "scale_by": 2,
+      "image": [
+        "1332:1261",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "1332:1261": {
+    "inputs": {
+      "indexes": "-1",
+      "err_if_missing": true,
+      "err_if_empty": true,
+      "image": [
+        "1262:1253",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectImages",
+    "_meta": {
+      "title": "Select Images 🎥🅥🅗🅢"
+    }
+  },
+  "1332:1256": {
+    "inputs": {
+      "width": [
+        "1445",
+        0
+      ],
+      "height": [
+        "1445",
+        1
+      ],
+      "length": [
+        "1282",
+        0
+      ],
+      "batch_size": 1,
+      "motion_frames": [
+        "605",
+        0
+      ],
+      "motion_amplitude": [
+        "604",
+        0
+      ],
+      "positive": [
+        "1332:1268",
+        0
+      ],
+      "negative": [
+        "1332:1259",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ],
+      "previous_video": [
+        "1332:1260",
+        0
+      ],
+      "initial_reference_image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "PainterLongVideo",
+    "_meta": {
+      "title": "2-PainterLongVideo"
+    }
+  },
+  "1332:1258": {
+    "inputs": {
+      "samples": [
+        "1332:1606",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1332:1269": {
+    "inputs": {
+      "text": "(At 0 seconds: A photorealistic medium close-up of the same man, still wearing black-framed glasses and gray t-shirt. He has slightly parted lips as if about to speak or mid-breath.) (At 1 seconds: The background reveals more interior detail—a textured beige wall with faint vertical lines suggesting architectural molding—still blurred but discernible in bokeh effect.) (At 2 seconds: His eyes remain fixed on the viewer, pupils dilated just enough for natural depth and realism under soft illumination from behind his left shoulder.) (At 3 seconds: A slight motion blur appears around one eye as he blinks naturally; hair strands shift subtly due to micro-movement within frame duration.) (At 4 seconds: The lighting accentuates the fine lines near his nose bridge, adding dimensionality without artificial enhancement.) (At 5 seconds: He maintains a neutral yet expressive facial expression while keeping direct contact with viewer’s gaze for sustained emotional connection.)",
+      "anything": [
+        "1332:1284",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Final prompt preview"
+    }
+  },
+  "1332:1283": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "LoRaS Triggers"
+    }
+  },
+  "1332:1268": {
+    "inputs": {
+      "text": [
+        "1332:1269",
+        0
+      ],
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive encode"
+    }
+  },
+  "1332:1284": {
+    "inputs": {
+      "delimiter": "",
+      "clean_whitespace": "false",
+      "text_a": [
+        "1332:1283",
+        0
+      ],
+      "text_b": [
+        "1594",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "1332:308": {
+    "inputs": {
+      "seed": 449387145916005
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "2-Seed high"
+    }
+  },
+  "1332:1280": {
+    "inputs": {
+      "boundary": 0.9,
+      "add_noise": "enable",
+      "noise_seed": [
+        "1332:308",
+        0
+      ],
+      "steps": [
+        "1283",
+        0
+      ],
+      "cfg_high_noise": 1,
+      "cfg_low_noise": 1,
+      "sampler_name": [
+        "1480",
+        0
+      ],
+      "scheduler": [
+        "1481",
+        0
+      ],
+      "sigma_shift": [
+        "1551",
+        0
+      ],
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model_high_noise": [
+        "182",
+        0
+      ],
+      "model_low_noise": [
+        "180",
+        0
+      ],
+      "positive": [
+        "1332:1256",
+        0
+      ],
+      "negative": [
+        "1332:1256",
+        1
+      ],
+      "latent_image": [
+        "1332:1256",
+        2
+      ]
+    },
+    "class_type": "WanMoeKSamplerAdvanced",
+    "_meta": {
+      "title": "Wan MoE KSampler (Advanced)"
+    }
+  },
+  "1332:1606": {
+    "inputs": {
+      "cleanup_mode": "Text Encoder",
+      "input": [
+        "1332:1280",
+        0
+      ]
+    },
+    "class_type": "VRAMCleanup",
+    "_meta": {
+      "title": "VRAM Cleanup"
+    }
+  },
+  "1344:1259": {
+    "inputs": {
+      "text": "色调艳丽，过曝，静态，细节模糊不清，字幕，风格，作品，画作，画面，静止，整体发灰，最差质量，低质量，JPEG压缩残留，丑陋的，残缺的，多余的手指，画得不好的手部，画得不好的脸部，畸形的，毁容的，形态畸形的肢体，手指融合，静止不动的画面，杂乱的背景，三条腿，背景人很多，倒着走",
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "1344:1253": {
+    "inputs": {
+      "inputcount": 2,
+      "Update inputs": null,
+      "image_1": [
+        "1332:1253",
+        0
+      ],
+      "image_2": [
+        "1344:1258",
+        0
+      ]
+    },
+    "class_type": "ImageBatchMulti",
+    "_meta": {
+      "title": "Image Batch Multi"
+    }
+  },
+  "1344:1256": {
+    "inputs": {
+      "width": [
+        "1445",
+        0
+      ],
+      "height": [
+        "1445",
+        1
+      ],
+      "length": [
+        "1282",
+        0
+      ],
+      "batch_size": 1,
+      "motion_frames": [
+        "605",
+        0
+      ],
+      "motion_amplitude": [
+        "604",
+        0
+      ],
+      "positive": [
+        "1344:1268",
+        0
+      ],
+      "negative": [
+        "1344:1259",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ],
+      "previous_video": [
+        "1344:1260",
+        0
+      ],
+      "initial_reference_image": [
+        "97",
+        0
+      ]
+    },
+    "class_type": "PainterLongVideo",
+    "_meta": {
+      "title": "2-PainterLongVideo"
+    }
+  },
+  "1344:1258": {
+    "inputs": {
+      "samples": [
+        "1344:1607",
+        0
+      ],
+      "vae": [
+        "916",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "1344:1260": {
+    "inputs": {
+      "upscale_method": "nearest-exact",
+      "scale_by": 2,
+      "image": [
+        "1344:1261",
+        0
+      ]
+    },
+    "class_type": "ImageScaleBy",
+    "_meta": {
+      "title": "Upscale Image By"
+    }
+  },
+  "1344:1268": {
+    "inputs": {
+      "text": [
+        "1344:1269",
+        0
+      ],
+      "clip": [
+        "1521",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive encode"
+    }
+  },
+  "1344:1269": {
+    "inputs": {
+      "text": "(At 0 seconds: A photorealistic portrait of the man smiling softly at camera; black-framed glasses reflect ambient light subtly. His gray t-shirt shows natural fabric texture and slight creases.) (At 1 seconds: Behind him, a shallow depth-of-field reveals warm-toned interior with blurred architectural elements—window frame or doorway visible on far left edge.) (At 2 seconds: Soft shadows fall across his cheeks from angled lighting above; skin pores are rendered in extreme detail for realism.) (At 3 seconds: His gaze remains unwavering, eyes slightly crinkled at the corners due to genuine smile expression rather than forced grin.) (At 4 seconds: Camera holds steady without movement as he subtly leans forward just enough to create slight compression of facial features within frame.) (At 5 seconds: The overall composition retains intimate portrait framing; lighting remains consistent and naturalistic, emphasizing authentic human presence in calm setting.)",
+      "anything": [
+        "1344:1284",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "Final prompt preview"
+    }
+  },
+  "1344:1283": {
+    "inputs": {
+      "value": ""
+    },
+    "class_type": "PrimitiveStringMultiline",
+    "_meta": {
+      "title": "LoRaS Triggers"
+    }
+  },
+  "1344:1284": {
+    "inputs": {
+      "delimiter": "",
+      "clean_whitespace": "false",
+      "text_a": [
+        "1344:1283",
+        0
+      ],
+      "text_b": [
+        "1595",
+        0
+      ]
+    },
+    "class_type": "Text Concatenate",
+    "_meta": {
+      "title": "Text Concatenate"
+    }
+  },
+  "1344:308": {
+    "inputs": {
+      "seed": 261099627118272
+    },
+    "class_type": "Seed (rgthree)",
+    "_meta": {
+      "title": "2-Seed high"
+    }
+  },
+  "1344:1280": {
+    "inputs": {
+      "boundary": 0.9,
+      "add_noise": "enable",
+      "noise_seed": [
+        "1344:308",
+        0
+      ],
+      "steps": [
+        "1283",
+        0
+      ],
+      "cfg_high_noise": 1,
+      "cfg_low_noise": 1,
+      "sampler_name": [
+        "1480",
+        0
+      ],
+      "scheduler": [
+        "1481",
+        0
+      ],
+      "sigma_shift": [
+        "1551",
+        0
+      ],
+      "start_at_step": 0,
+      "end_at_step": 10000,
+      "return_with_leftover_noise": "disable",
+      "model_high_noise": [
+        "1040",
+        0
+      ],
+      "model_low_noise": [
+        "1037",
+        0
+      ],
+      "positive": [
+        "1344:1256",
+        0
+      ],
+      "negative": [
+        "1344:1256",
+        1
+      ],
+      "latent_image": [
+        "1344:1256",
+        2
+      ]
+    },
+    "class_type": "WanMoeKSamplerAdvanced",
+    "_meta": {
+      "title": "Wan MoE KSampler (Advanced)"
+    }
+  },
+  "1344:1607": {
+    "inputs": {
+      "cleanup_mode": "Full Cleanup",
+      "input": [
+        "1344:1280",
+        0
+      ]
+    },
+    "class_type": "VRAMCleanup",
+    "_meta": {
+      "title": "VRAM Cleanup"
+    }
+  },
+  "1344:1261": {
+    "inputs": {
+      "indexes": "-1",
+      "err_if_missing": true,
+      "err_if_empty": true,
+      "image": [
+        "1332:1253",
+        0
+      ]
+    },
+    "class_type": "VHS_SelectImages",
+    "_meta": {
+      "title": "Select Images 🎥🅥🅗🅢"
+    }
+  }
+}

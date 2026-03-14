@@ -9,15 +9,17 @@ interface GenerateTabProps {
 
 export function GenerateTab({ onGenerate }: GenerateTabProps) {
   const [mode, setMode] = useState<Mode>('T2V');
-  const [prompt, setPrompt] = useState('');
+  const [positivePrompt, setPositivePrompt] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>('16:9');
   const [duration, setDuration] = useState<Duration>('10s');
+  const [encodedImage, setEncodedImage] = useState<string | null>(null);
 
   const handleGenerate = () => {
     onGenerate({
       mode,
-      prompt,
+      positivePrompt,
+      encodedImage,
       negativePrompt,
       aspectRatio,
       duration
@@ -29,14 +31,16 @@ export function GenerateTab({ onGenerate }: GenerateTabProps) {
       <ModeToggle mode={mode} onChange={setMode} />
       <PromptInput 
         mode={mode} 
-        prompt={prompt} 
-        onChange={setPrompt} 
+        positivePrompt={positivePrompt} 
+        onPositiveChange={setPositivePrompt} 
         negativePrompt={negativePrompt}
         onNegativeChange={setNegativePrompt}
         aspectRatio={aspectRatio}
         onAspectRatioChange={setAspectRatio}
         duration={duration}
         onDurationChange={setDuration}
+        image={encodedImage}
+        onImageChange={setEncodedImage}
         onGenerate={handleGenerate}
       />
     </div>

@@ -38,7 +38,7 @@ class Database
     }
 
     // Generic prepared statement query helper
-    private static function query(string $query, array $params = []): mysqli_result|bool
+    public static function query(string $query, array $params = []): mysqli_result|bool
     {
         if (self::$connection === null) {
             self::connect();

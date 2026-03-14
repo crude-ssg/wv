@@ -4,7 +4,9 @@ export type Mode = 'T2V' | 'I2V';
 
 export type AspectRatio = '16:9' | '4:3' | '1:1' | '3:4' | '9:16';
 
-export type Duration = '5s' | '10s' | '15s';
+export type Duration = '5s' | '10s' | '15s' | '20s';
+
+export type VideoStatus = 'pending' | 'processing' | 'completed' | 'failed';
 
 export interface User {
   id: number;
@@ -19,18 +21,23 @@ export interface User {
 
 export interface GenSettings {
   mode: Mode;
-  prompt: string;
+  encodedImage: string | null;
+  positivePrompt: string;
   negativePrompt: string;
   aspectRatio: AspectRatio;
   duration: Duration;
 }
 
 export interface VideoData {
-  id: number;
-  url: string;
-  prompt: string;
+  id: string;
+  user_id: number;
+  job_id: string;
+  job_status: VideoStatus;
+  prompt: GenSettings;
   timestamp: string;
   thumbnail: string | null;
+  url: string | null;
+  filepath: string | null;
 }
 
 export interface GenEstimate {

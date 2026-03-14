@@ -11,8 +11,8 @@
     "sync": "pnpm sync:app && pnpm run sync:api",
     "watch:api": "chokidar \"api/**/*\" -c \"pnpm sync:api\"",
     "watch:app": "chokidar \"src/**/*\" -c \"pnpm sync:app\"",
-    "sync:app": "pnpm build && rsync -avz --delete --exclude='api/' dist/ $UPLOAD_DESTINATION",
-    "sync:api": "rsync -avz --delete api/ $UPLOAD_DESTINATION/api"
+    "sync:app": "pnpm build && rsync -avz --delete --chown=www:www --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r --exclude='api/' dist/ $UPLOAD_DESTINATION",
+    "sync:api": "rsync -avz --delete --chown=www:www --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r api/ $UPLOAD_DESTINATION/api"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",

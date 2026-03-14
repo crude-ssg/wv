@@ -10,7 +10,7 @@ class Response
     /**
      * Send a JSON response and exit.
      *
-     * @param array $data Data to send as JSON
+     * @param array|ApiData $data Data to send as JSON
      * @param int $status HTTP status code
      */
     public static function json(array | ApiData $data, int $status = 200)
@@ -19,6 +19,16 @@ class Response
             $data = $data->toArray();
         }
         
+        // make sure if any element is ApiData, convert it to array
+        if(is_array($data)) {
+            $data = array_map(function($item) {
+                if($item instanceof ApiData) {
+                    return $item->toArray();
+                }
+                return $item;
+            }, $data);
+        }
+
         http_response_code($status);
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);

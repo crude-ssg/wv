@@ -48,6 +48,7 @@ class HttpRequest<T> {
         });
 
         const data = await response.json().catch(() => ({}));
+        console.log(data);
 
         if (!response.ok) {
             const err = data as ApiErrorPayload;

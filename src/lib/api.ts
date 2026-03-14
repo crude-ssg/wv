@@ -1,5 +1,5 @@
 import { type GenSettings, type User, type VideoData } from "./api.types.gen";
-import { lerp, randomInt } from "./utils";
+import { lerp, randomUid } from "./utils";
 import { http } from "./http-client";
 
 const DUMMY_USER: User = {
@@ -24,20 +24,18 @@ export async function getAuthenticatedUser(): Promise<User | null> {
 
 export function createDummyVideo(settings: GenSettings): VideoData {
     return {
-        id: randomInt(100000, 500000),
+        id: randomUid(),
+        filepath: '',
+        job_id: randomUid(),
+        job_status: 'processing',
+        user_id: 1,
         url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-        prompt: settings.prompt,
+        prompt: settings,
         timestamp: 'Just now',
         thumbnail: null,
     }
 }
 
-/**
- * @param options Generation settings
- * @returns Generated video
- * 
- * @throws Error if generation failed, use error.message for user friendly message and error.cause for a error cause
- */
 export async function generateVideo(options: GenSettings): Promise<VideoData> {
     if (import.meta.env.PROD) {
         const video = await http<VideoData>("/api/generate/").post(options);
@@ -50,3 +48,18 @@ export async function generateVideo(options: GenSettings): Promise<VideoData> {
         }, lerp(5000, 8000, Math.random()))
     });
 }
+
+export async function status(video_id: string): Promise<VideoData> {
+    const video = await http<VideoData>(`/api/status?video_id=${video_id}`).get();
+    return video;
+}
+
+export async function getHistory(): Promise<VideoData[]> {
+    if (import.meta.env.PROD) {
+        const videos = await http<VideoData[]>("/api/history/").get();
+        return videos;
+    }
+
+    return [];
+}
+            
