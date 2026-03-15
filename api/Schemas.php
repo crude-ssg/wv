@@ -60,7 +60,7 @@ class GenSettings extends ApiData
 
     public static function fromArray(array $data): static
     {
-        if (($data['encodedImage'] == null || $data['encodedImage'] == '') && $data['mode'] == Mode::I2V) {
+        if (empty($data['encodedImage']) && $data['mode'] == Mode::I2V->value) {
             $bag = new ErrorBag();
             $bag->add('encodedImage', 'Reference image is required for I2V mode');
             throw new ValidationError('Missing reference image', $bag);
