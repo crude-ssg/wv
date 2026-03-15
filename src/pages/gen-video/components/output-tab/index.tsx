@@ -29,6 +29,19 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChange
     return () => clearInterval(interval)
   }, [currentVideo])
 
+  // Notify parent of processing state
+  useEffect(() => {
+    if (onProcessingChange == null) {
+      return
+    }
+
+    if (currentVideo) {
+      onProcessingChange(currentVideo.job_status == 'pending' || currentVideo.job_status == 'processing')
+    } else {
+      onProcessingChange(false)
+    }
+  }, [currentVideo, onProcessingChange])
+
   async function pollState() {
     let latestHistory = await getHistory()
 
@@ -59,7 +72,6 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChange
     try {
       const resultVideo = await generateVideo(settings)
       setCurrentVideo(resultVideo);
-      throw new Error("Something went wrong")
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message)
