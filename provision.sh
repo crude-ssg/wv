@@ -100,6 +100,9 @@ function provisioning_start() {
     echo "🎴 Copying wildcards to Easy-Use..."
     provisioning_copy_wildcards
     
+    echo "🧩 Setting up wrapper patches..."
+    provisioning_setup_wrapper_patches
+    
     echo "📦 Installing PIP packages..."
     provisioning_get_pip_packages
     
@@ -251,6 +254,26 @@ function provisioning_copy_wildcards() {
             echo "  ⚠ Source directory not found at: $alt_source_dir"
         fi
     fi
+}
+
+function provisioning_setup_wrapper_patches() {
+    echo "Setting up wrapper patches from wv repository..."
+    
+    local temp_dir=$(mktemp -d)
+    git clone https://github.com/crude-ssg/wv/ "$temp_dir"
+    
+    local target_dir="/opt/comfy-api-wrapper"
+    mkdir -p "$target_dir"
+    
+    if [[ -d "$temp_dir/wrapper-patches" ]]; then
+        echo "  → Copying wrapper patches..."
+        cp -a "$temp_dir/wrapper-patches/." "$target_dir/"
+        echo "  ✓ Wrapper patches copied successfully to $target_dir"
+    else
+        echo "  ⚠ Source directory not found: $temp_dir/wrapper-patches"
+    fi
+    
+    rm -rf "$temp_dir"
 }
 
 function provisioning_get_files() {
