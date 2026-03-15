@@ -5,107 +5,124 @@ import { ErrorState } from './error-state';
 import { EmptyState } from './empty-state';
 import { HistorySidebar } from './history-sidebar';
 import type { GenSettings, VideoData } from '@/lib/api.types.gen';
-import { generateVideo, getHistory, status } from '@/lib/api';
+import { createDummyVideo, generateVideo, getHistory } from '@/lib/api';
+import type { Tab } from '../..';
 
 export interface OutputTabHandle {
   startGeneration: (settings: GenSettings) => void;
 }
 
 interface OutputTabProps {
-  onRetry: () => void;
+  onChangeTab: (tab: Tab) => void;
   onProcessingChange?: (isProcessing: boolean) => void;
 }
 
-const MOCK_HISTORY: VideoData[] = [
-];
-
-export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onRetry, onProcessingChange }, ref) => {
-  const [isProcessing, setIsProcessing] = useState(false);
+export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChangeTab, onProcessingChange }, ref) => {
   const [error, setError] = useState<string | null>(null);
   const [currentVideo, setCurrentVideo] = useState<VideoData | null>(null);
-  const [history, setHistory] = useState<VideoData[]>(MOCK_HISTORY);
+  const [history, setHistory] = useState<VideoData[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-
-  useEffect(() => {
-    onProcessingChange?.(isProcessing);
-  }, [isProcessing, onProcessingChange]);
 
   useEffect(() => {
     pollState()
     const interval = setInterval(pollState, 10_000)
     return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
-    if(currentVideo?.job_status == 'completed' || currentVideo?.job_status == 'failed') {
-      setIsProcessing(false)
-    } else {
-      setIsProcessing(true)
-    }
   }, [currentVideo])
 
   async function pollState() {
-    if (currentVideo != null) {
-      const videoStatus = await status(currentVideo.id)
-      setCurrentVideo(videoStatus)
-    }
+    let latestHistory = await getHistory()
 
-    const latestHistory = await getHistory()
+    // if current video is not in history, add it
+    if (currentVideo != null) {
+      const video = latestHistory.find(v => v.id === currentVideo.id)
+      if (video == null) {
+        latestHistory.unshift(currentVideo)
+      } else {
+        setCurrentVideo(video)
+      }
+    }
     setHistory(latestHistory)
   }
 
   useImperativeHandle(ref, () => ({
-    startGeneration: async (settings: GenSettings) => {
-      setIsProcessing(true);
-      setCurrentVideo(null);
-      setError(null);
-
-      try {
-        const resultVideo = await generateVideo(settings)
-        setCurrentVideo(resultVideo);
-        setHistory(prev => [resultVideo, ...prev]);
-      } catch (e) {
-        if (e instanceof Error) {
-          setError(e.message)
-        } else {
-          setError("Unknown error occured")
-        }
-      } finally {
-        setIsProcessing(false);
-      }
-    }
+    startGeneration
   }));
+
+  async function startGeneration(settings: GenSettings) {
+    setError(null);
+    const dummy = createDummyVideo(settings)
+    dummy.id = "dummy"
+    dummy.job_status = 'pending'
+    setCurrentVideo(dummy)
+    setHistory(prev => [dummy, ...prev])
+
+    try {
+      const resultVideo = await generateVideo(settings)
+      setCurrentVideo(resultVideo);
+      throw new Error("Something went wrong")
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message)
+      } else {
+        setError("Unknown error occured")
+      }
+    } finally {
+    }
+  }
+
+  // Using an inner Component so we can use early returns (I hate nested ternaries)
+  function StateSwitch() {
+    if (currentVideo?.id == null) {
+      return <EmptyState />
+    }
+
+    // Must appear before pending check so it shows error instead of pending
+    if (currentVideo.job_status == 'failed' || error != null) {
+      return (
+        <ErrorState
+          error={error ?? 'Unknown error occured'}
+          onAdjust={() => onChangeTab('generate')}
+          onRetry={() => startGeneration(currentVideo.prompt)}
+        />
+      )
+    }
+
+    if (currentVideo.job_status == 'pending') {
+      return <ProcessingState />
+    }
+
+    if (currentVideo.job_status == 'processing') {
+      return <ProcessingState />
+    }
+
+    if (currentVideo.job_status == 'completed') {
+      return (
+        <div className="flex-1 p-2 md:p-4 flex items-center justify-center min-h-0 overflow-hidden">
+          <div className="w-full h-full max-w-5xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden relative bg-black/40">
+            <VideoPlayer src={currentVideo.url!} />
+          </div>
+        </div>
+      )
+    }
+  }
 
   return (
     <div className="flex-1 flex flex-row overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-300 h-full">
       {/* Left Area (Player/States) */}
       <div className="flex-1 flex flex-col min-w-0">
-        {isProcessing ? (
-          <ProcessingState />
-        ) : error ? (
-          <ErrorState error={error} onRetry={onRetry} />
-        ) : currentVideo ? (
-          currentVideo.job_status === 'completed' ? (
-            <div className="flex-1 p-2 md:p-4 flex items-center justify-center min-h-0 overflow-hidden">
-              <div className="w-full h-full max-w-5xl rounded-3xl border border-white/10 shadow-2xl overflow-hidden relative bg-black/40">
-                <VideoPlayer src={currentVideo.url!} />
-              </div>
-            </div>
-          ) : currentVideo.job_status === 'failed' ? (
-            <ErrorState error="This video generation task failed to complete." onRetry={onRetry} />
-          ) : (
-            <ProcessingState />
-          )
-        ) : (
-          <EmptyState />
-        )}
+        <StateSwitch />
       </div>
 
       {/* History Sidebar */}
       <HistorySidebar
         history={history}
-        currentVideo={currentVideo}
-        onSelect={setCurrentVideo}
+        selectedVideoId={currentVideo?.id ?? null}
+        onSelect={(id) => {
+          const video = history.find(v => v.id === id)
+          if (video) {
+            setCurrentVideo(video)
+          }
+        }}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />

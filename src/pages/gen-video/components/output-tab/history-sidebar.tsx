@@ -4,15 +4,15 @@ import type { VideoData } from '@/lib/api.types.gen';
 
 interface HistorySidebarProps {
   history: VideoData[];
-  currentVideo: VideoData | null;
-  onSelect: (video: VideoData) => void;
+  selectedVideoId: string | null;
+  onSelect: (videoId: string | null) => void;
   searchQuery: string;
   onSearchChange: (query: string) => void;
 }
 
 export function HistorySidebar({
   history,
-  currentVideo,
+  selectedVideoId,
   onSelect,
   searchQuery,
   onSearchChange
@@ -44,10 +44,10 @@ export function HistorySidebar({
             {filteredHistory.map((item) => (
               <button
                 key={item.id}
-                onClick={() => onSelect(item)}
+                onClick={() => onSelect(item.id)}
                 className={cn(
                   "w-full text-left p-2 rounded-xl border transition-all duration-200 group relative overflow-hidden",
-                  currentVideo?.id === item.id
+                   selectedVideoId === item.id
                     ? "bg-accent/10 border-accent/20"
                     : "bg-transparent border-transparent hover:bg-white/5 hover:border-white/10"
                 )}

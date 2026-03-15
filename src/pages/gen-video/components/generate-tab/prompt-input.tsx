@@ -118,7 +118,7 @@ export function PromptInput({
 
         <PrimaryButton
           onClick={onGenerate}
-          className="md:absolute md:bottom-12 md:right-4 mt-3 md:mt-0 w-full md:w-auto px-6 py-2.5 rounded-full text-sm"
+          className="md:absolute md:bottom-12 md:right-4 mt-6 md:mt-0 mx-auto md:mx-0 w-auto px-6 py-2.5 rounded-full text-sm"
         >
           Generate <Zap size={15} />
         </PrimaryButton>

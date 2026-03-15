@@ -22,7 +22,7 @@ export async function getAuthenticatedUser(): Promise<User | null> {
     return DUMMY_USER;
 }
 
-export function createDummyVideo(settings: GenSettings): VideoData {
+export function createDummyVideo(settings?: GenSettings): VideoData {
     return {
         id: randomUid(),
         filepath: '',
@@ -30,7 +30,14 @@ export function createDummyVideo(settings: GenSettings): VideoData {
         job_status: 'processing',
         user_id: 1,
         url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-        prompt: settings,
+        prompt: {
+            aspectRatio: settings?.aspectRatio ?? '16:9',
+            mode: 'I2V',
+            encodedImage: settings?.encodedImage ?? '',
+            negativePrompt: settings?.negativePrompt ?? '',
+            positivePrompt: settings?.positivePrompt ?? '',
+            duration: settings?.duration ?? '10s',
+        },
         timestamp: 'Just now',
         thumbnail: null,
     }

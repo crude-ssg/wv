@@ -9,8 +9,10 @@ import { cn } from "@/lib/utils";
 import { GenerateTab } from './components/generate-tab';
 import type { GenSettings } from '@/lib/api.types.gen';
 
+export type Tab = 'generate' | 'output';
+
 export function GenVideoPage() {
-  const [activeTab, setActiveTab] = useState<'generate' | 'output'>('generate');
+  const [activeTab, setActiveTab] = useState<Tab>('generate');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   
@@ -18,8 +20,6 @@ export function GenVideoPage() {
 
   const handleGenerate = (settings: GenSettings) => {
     setActiveTab('output');
-    // We need to wait a tick for the tab to be potentially "visible" if we were doing mount-based logic,
-    // but with hidden it should be fine. However, startGeneration is imperative.
     outputTabRef.current?.startGeneration(settings);
   };
 
@@ -86,7 +86,7 @@ export function GenVideoPage() {
                <div className={cn("absolute inset-0 flex flex-col", activeTab !== 'output' && "hidden")}>
                   <OutputTab 
                     ref={outputTabRef} 
-                    onRetry={() => setActiveTab('generate')} 
+                    onChangeTab={(tab) => setActiveTab(tab)}
                     onProcessingChange={setIsProcessing} 
                   />
                </div>
