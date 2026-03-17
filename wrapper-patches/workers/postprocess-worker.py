@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 from typing import Dict, List, Optional
 import json
+import time
 
 import aiobotocore.session
 import aiofiles
@@ -23,6 +24,7 @@ class PostprocessWorker:
     """
     def __init__(self, worker_id, kwargs):
         self.worker_id = worker_id
+        self.cleaner = FileCleaner()
         self.preprocess_queue = kwargs["preprocess_queue"]
         self.generation_queue = kwargs["generation_queue"]
         self.postprocess_queue = kwargs["postprocess_queue"]
@@ -114,6 +116,10 @@ class PostprocessWorker:
                     logger.debug(f"Cleaned up request for {request_id}")
                 except Exception as e:
                     logger.warning(f"Failed to clean up request for {request_id}: {e}")
+
+                # Clean up files older than 16 hours
+                await self.cleaner.cleanup_older_files()
+
                 # Mark the job as complete
                 self.postprocess_queue.task_done()
             
@@ -413,7 +419,7 @@ class PostprocessWorker:
         except Exception as e:
             logger.error(f"Error encoding {local_path} to base64: {e}")
             return None
-    
+            
     async def send_webhook(self, webhook_url: str, result, extra_params: Dict = None) -> None:
         """Send webhook notification with result"""
         try:
@@ -424,7 +430,6 @@ class PostprocessWorker:
             for obj in output:
                 if obj.get("local_path"):
                     encoded_outputs.append(await self.get_base64_data(obj["local_path"]))
-                    await self._remove_file_async(Path(obj["local_path"])) # remove the local file after encoding to prevent storage from filling up
                 else:
                     encoded_outputs.append(None)
             
@@ -508,3 +513,47 @@ class PostprocessWorker:
         except Exception as e:
             logger.error(f"Error getting webhook config: {e}")
             return None
+
+class FileCleaner:
+
+    async def cleanup_older_files(self):
+        """Cleanup image and video files older than 16 hours in the ComfyUI input and output directory"""
+        
+        base_dir = "/workspace/ComfyUI" #TODO: make this configurable
+        directories = [
+            base_dir + "/output",
+            base_dir + "/input"
+        ]
+
+        max_age_seconds = 16 * 60 * 60  # 16 hours
+        now = time.time()
+
+        # Run blocking IO in thread pool
+        await asyncio.to_thread(self._cleanup_sync, directories, now, max_age_seconds)
+
+    def _cleanup_sync(self, directories, now, max_age_seconds):
+        deleted_files = 0
+        errors = 0
+
+        for directory in directories:
+            path = Path(directory)
+
+            if not path.exists():
+                continue
+
+            for file in path.rglob("*"):
+                try:
+                    if not file.is_file():
+                        continue
+
+                    file_age = now - file.stat().st_mtime
+
+                    if file_age > max_age_seconds:
+                        file.unlink()
+                        deleted_files += 1
+
+                except Exception as e:
+                    errors += 1
+                    print(f"[cleanup] Failed to delete {file}: {e}")
+
+        print(f"[cleanup] Done. Deleted: {deleted_files}, Errors: {errors}")
