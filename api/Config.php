@@ -4,9 +4,9 @@ $_configuration = [
     'base_api_url' => Config::httpHost() . '/video-gen/api',
     'base_url' => Config::httpHost() . '/video-gen',
 
-    'storage.public_storage_url' => Config::httpHost() . "/video-storage",
-    'storage.real_storage_dir' => '/data/videos',
-    'storage.public_storage_dir' => Config::webroot_dir() . "/video-storage"
+    'storage.public_storage_url' => Config::httpHost() . "/video-gen-storage",
+    'storage.real_storage_dir' => '/data/videos-gen-storage',
+    'storage.public_storage_dir' => Config::webroot_dir() . "/video-gen-storage"
 ];
 
 class Config {
