@@ -20,7 +20,7 @@ class Util
      * @param string $base64
      * @return array
      */
-    public function decodeBase64Video(string $base64): array {
+    public static function decodeBase64Video(string $base64): array {
         $parts = explode(",", $base64);
         $mime = $parts[0];
         $data = $parts[1];
