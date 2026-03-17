@@ -3,7 +3,7 @@
     - [x] delete resulting video
     - [ ] delete uploaded image
 
-- [ ] Videos must be saved to /data/videos/$username on the web-server (symlink to webroot to be publicly accessible)
+- [x] Videos must be saved to /data/videos/$username on the web-server (symlink to webroot to be publicly accessible)
 
 - [ ] Make a cooldown of 60 seconds between each generation giving others a chance to make videos
 
