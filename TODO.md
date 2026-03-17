@@ -1,5 +1,7 @@
 # Features
 - [ ] Update postprocess-worker.py to delete artifacts once generation is completed or fails (uploaded image, resulting video)
+    - [x] delete resulting video
+    - [ ] delete uploaded image
 
 - [ ] Videos must be saved to /data/videos/$username on the web-server (symlink to webroot to be publicly accessible)
 
