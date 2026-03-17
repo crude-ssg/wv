@@ -27,7 +27,7 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChange
     pollState()
     const interval = setInterval(pollState, 10_000)
     return () => clearInterval(interval)
-  }, [currentVideo])
+  }, [])
 
   // Notify parent of processing state
   useEffect(() => {
