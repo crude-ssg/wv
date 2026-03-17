@@ -424,7 +424,7 @@ class PostprocessWorker:
             for obj in output:
                 if obj.get("local_path"):
                     encoded_outputs.append(await self.get_base64_data(obj["local_path"]))
-                    await self._remove_file_async(obj["local_path"]) # remove the local file after encoding to prevent storage from filling up
+                    await self._remove_file_async(Path(obj["local_path"])) # remove the local file after encoding to prevent storage from filling up
                 else:
                     encoded_outputs.append(None)
             
