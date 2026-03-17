@@ -60,6 +60,11 @@ class Storage {
         $filename = $videoId . ".mp4";
         $filepath = Util::joinPaths($storageDir, $filename);
 
+        // Ensure directory exists
+        if (!is_dir($storageDir)) {
+            mkdir($storageDir, 0755, true);
+        }
+
         return [
             'filepath' => $filepath,
             'filename' => $filename,
