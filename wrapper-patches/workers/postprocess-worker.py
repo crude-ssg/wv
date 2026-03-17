@@ -424,6 +424,7 @@ class PostprocessWorker:
             for obj in output:
                 if obj.get("local_path"):
                     encoded_outputs.append(await self.get_base64_data(obj["local_path"]))
+                    await self._remove_file_async(obj["local_path"]) # remove the local file after encoding to prevent storage from filling up
                 else:
                     encoded_outputs.append(None)
             
@@ -446,11 +447,11 @@ class PostprocessWorker:
                     json=webhook_data,
                     headers={'Content-Type': 'application/json'}
                 ) as response:
+                    body = await response.text()
                     if response.status >= 400:
-                        error_text = await response.text()
-                        logger.warning(f"Webhook failed (status {response.status}): {error_text}")
+                        logger.warning(f"Webhook failed (status {response.status}): {body}")
                     else:
-                        logger.info(f"Webhook sent successfully to {webhook_url}")
+                        logger.info(f"Webhook sent successfully to {webhook_url} with body: {body}")
                         
         except Exception as e:
             logger.error(f"Error sending webhook to {webhook_url}: {e}")
