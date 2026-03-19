@@ -19,7 +19,7 @@ class VideoGenerator
 
     private static function estimateCost(GenSettings $settings)
     {
-        return 200;
+        return Config::get("gen.cost.{$settings->mode->value}.{$settings->duration->value}");
     }
 
     private static function estimateDuration(GenSettings $settings)
@@ -80,6 +80,20 @@ class VideoGenerator
 
     public static function hasPendingJob(User $user)
     {
-        return false;
+        $video = VideoData::findLatestByUserId($user->id);
+        if($video == null) {
+            return false;
+        }
+        
+        // make sure its not a stale job (older than 6 hour)
+        $stale_threshold = Config::get('gen.stale_job_threshold_hours');
+        $now = new DateTime();
+        $videoTime = new DateTime($video->timestamp);
+        $diff = $now->diff($videoTime);
+        if($diff->h >= $stale_threshold) {
+            return false;
+        }
+        
+        return $video->job_status == VideoStatus::PENDING || $video->job_status == VideoStatus::PROCESSING;
     }
 }

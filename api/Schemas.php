@@ -83,6 +83,14 @@ class VideoData extends ApiData
     public ?string $url;
     public ?string $filepath;
 
+    public function isStale(): bool {
+        $stale_threshold = Config::get('gen.stale_job_threshold_hours');
+        $now = new DateTime();
+        $videoTime = new DateTime($this->timestamp);
+        $diff = $now->diff($videoTime);
+        return $diff->h >= $stale_threshold && $this->job_status != VideoStatus::COMPLETED && $this->job_status != VideoStatus::FAILED;
+    }
+
     public static function get(string $id, $include_encoded_image = false): ?VideoData {
         $sql = "SELECT * FROM video_data WHERE id = ?";
         $result = Database::query($sql, [$id]);
@@ -100,7 +108,30 @@ class VideoData extends ApiData
         return $data;
     }
 
-    public static function allByUserId(int $userId, $include_encoded_image = false): array {
+    public static function findLatestByUserId(int $userId, $include_encoded_image = false): ?VideoData {
+        $sql = "SELECT * FROM video_data WHERE user_id = ? ORDER BY timestamp DESC LIMIT 1";
+        $result = Database::query($sql, [$userId]);
+        if(!$result) {
+            throw new InternalServerError("Something went wrong while querying for video");
+        }
+        $row = $result->fetch_assoc();
+        if(!$row) {
+            return null;
+        }
+        $data = self::fromArray($row);
+        if(!$include_encoded_image) {
+            $data->prompt->encodedImage = null;
+        }
+        return $data;
+    }
+
+    /**
+     * Get all videos for a user, ordered by timestamp descending
+     * @param int $userId
+     * @param bool $include_encoded_image
+     * @return VideoData[]
+     */
+    public static function mostRecentByUser(int $userId, $include_encoded_image = false): array {
         $sql = "SELECT * FROM video_data WHERE user_id = ? ORDER BY timestamp DESC";
         $result = Database::query($sql, [$userId]);
         if(!$result) {

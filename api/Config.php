@@ -8,6 +8,12 @@ $_configuration = [
     'storage.real_storage_dir' => '/data/videos',
     'storage.public_storage_dir' => Config::webroot_dir() . "/video-storage",
 
+    'gen.stale_job_threshold_hours' => 3, // How long a job is considered "pending" before it's considered stale
+    'gen.cost.I2V.5s' => 50,
+    'gen.cost.I2V.10s' => 60,
+    'gen.cost.I2V.15s' => 80,
+    'gen.cost.I2V.20s' => 100,
+
     'instances' => [
         GpuInstance::create()
             ->baseUrl('http://72.134.81.13:40894')

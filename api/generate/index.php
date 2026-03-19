@@ -8,20 +8,20 @@ $user = Auth::requireAuth();
 
 $settings = GenSettings::fromArray(Request::json());
 
-if(empty($settings->positivePrompt)) {
-    throw new GenerateError("Prompt is required");
-}
-
 if($settings->mode == Mode::T2V) {
     throw new GenerateError("Text to video is not implemented yet");
 }
 
-$estimate = VideoGenerator::estimate($settings);
+if(empty($settings->positivePrompt)) {
+    throw new GenerateError("Prompt is required");
+}
 
 // Make sure there isn't a job pending
 if (VideoGenerator::hasPendingJob($user)) {
     throw new GenerateAlreadyPendingError();
 }
+
+$estimate = VideoGenerator::estimate($settings);
 
 // Make sure user has enough tokens
 if ($user->tokens - $estimate->tokens < 0) {
@@ -29,5 +29,5 @@ if ($user->tokens - $estimate->tokens < 0) {
 }
 
 $video = VideoGenerator::generate($settings, $user);
-// Database::deductUserTokens($user->id, $estimate->tokens); // commented out so we don't have to keep replenishing tokens when testing
+Database::deductUserTokens($user->id, $estimate->tokens);
 Response::json($video);

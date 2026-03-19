@@ -82,6 +82,10 @@ class InsufficientTokensError extends ApiError
 class GenerateAlreadyPendingError extends ApiError
 {
     protected int $status = 400;
+
+    public function __construct(string $message = "You already have a recent job pending. Please wait for it to complete before generating a new video.") {
+        parent::__construct($message);
+    }
 }
 
 class GenerateError extends ApiError {
