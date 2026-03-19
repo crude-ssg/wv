@@ -2,6 +2,7 @@
 
 class Http
 {
+    private string $baseUrl = '';
     private string $url = '';
     private string $method = 'GET';
     private array $headers = [];
@@ -11,31 +12,37 @@ class Http
     private bool $throwOnError = false;
     private bool $verifySSL = true;
 
-    public static function create(): self
+    public static function create(): static
     {
-        return new self();
+        return new static();
     }
 
     // --- Builder Methods ---
-    public function url(string $url): self
+    public function baseUrl(string $baseUrl): static
     {
-        $this->url = $url;
+        $this->baseUrl = $baseUrl;
+        return $this;
+    }
+    
+    public function url(string $url, bool $absolute = false): static
+    {
+        $this->url = $absolute ? $url : $this->baseUrl . $url;
         return $this;
     }
 
-    public function method(string $method): self
+    public function method(string $method): static
     {
         $this->method = strtoupper($method);
         return $this;
     }
 
-    public function header(string $key, string $value): self
+    public function header(string $key, string $value): static
     {
         $this->headers[$key] = $value;
         return $this;
     }
 
-    public function headers(array $headers): self
+    public function headers(array $headers): static
     {
         foreach ($headers as $k => $v) {
             $this->header($k, $v);
@@ -43,50 +50,50 @@ class Http
         return $this;
     }
 
-    public function query(array $params): self
+    public function query(array $params): static
     {
         $this->queryParams = array_merge($this->queryParams, $params);
         return $this;
     }
 
-    public function json(array $data): self
+    public function json(array $data): static
     {
         $this->body = json_encode($data);
         $this->header('Content-Type', 'application/json');
         return $this;
     }
 
-    public function body(string $body): self
+    public function body(string $body): static
     {
         $this->body = $body;
         return $this;
     }
 
-    public function timeout(int $seconds): self
+    public function timeout(int $seconds): static
     {
         $this->timeout = $seconds;
         return $this;
     }
 
-    public function throwOnError(bool $throw = true): self
+    public function throwOnError(bool $throw = true): static
     {
         $this->throwOnError = $throw;
         return $this;
     }
 
-    public function verifySSL(bool $verify = true): self
+    public function verifySSL(bool $verify = true): static
     {
         $this->verifySSL = $verify;
         return $this;
     }
 
     // --- Shortcut / convenience methods ---
-    public function bearerToken(string $token): self
+    public function bearerToken(string $token): static
     {
         return $this->header('Authorization', 'Bearer ' . $token);
     }
 
-    public function apiKey(string $key, string $headerName = 'X-API-Key'): self
+    public function apiKey(string $key, string $headerName = 'X-API-Key'): static
     {
         return $this->header($headerName, $key);
     }
@@ -375,7 +382,7 @@ class HttpResponse
         return $this->curlError !== null;
     }
 
-    public function throw(): self
+    public function throw(): static
     {
         if ($this->failed()) {
             throw new HttpException($this);
@@ -384,7 +391,7 @@ class HttpResponse
         return $this;
     }
 
-    public function onError(callable $callback): self
+    public function onError(callable $callback): static
     {
         if ($this->failed()) {
             $callback($this);
@@ -455,12 +462,12 @@ class HttpCollection implements ArrayAccess, IteratorAggregate, Countable
         return !$this->isEmpty();
     }
 
-    public function map(callable $callback): self
+    public function map(callable $callback): static
     {
         return new self(array_map($callback, $this->items));
     }
 
-    public function filter(callable $callback): self
+    public function filter(callable $callback): static
     {
         return new self(array_filter($this->items, $callback, ARRAY_FILTER_USE_BOTH));
     }

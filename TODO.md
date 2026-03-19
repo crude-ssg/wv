@@ -6,8 +6,9 @@
 - [ ] Make a cooldown of 60 seconds between each generation giving others a chance to make videos
 
 # Bugfixes
-- [ ] Fix bug where precessing UI will show forever even after generation is completed.
-- [ ] bug where processsing ui resets when there's a new history request.
+- [x] Fix bug where precessing UI will show forever even after generation is completed. meaninng video won't start playing.
+- [x] bug where processsing ui resets when there's a new history request.
+- [x] fix bug where the video player resets when there is a new history update
 
 # Future Features
 - Add Explore Tab

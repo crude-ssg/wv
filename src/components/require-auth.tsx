@@ -23,6 +23,7 @@ export default function RequireAuth() {
         setLoading(true)
         try {
             const user = await getAuthenticatedUser();
+            console.log(user)
             setUser(user)
         } catch (e) {
             console.error(e)

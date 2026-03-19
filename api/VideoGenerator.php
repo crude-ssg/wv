@@ -38,12 +38,12 @@ class VideoGenerator
         $workflow = new Workflow('i2v-autoprompt-workflow-api.json');
         $workflow = $workflow->build($settings);
         
+        $instance = Config::getRandomGpuInstance();
         $video_id = uniqid();
-        $response = Http::create()
+        $response = $instance
+            ->url('/generate')
             ->throwOnError()
-            ->url('http://72.134.81.13:40894/generate')
             ->timeout(600)
-            ->bearerToken('8770146493c08cfbb5ff0e737d69e45f5b88e2bf55c15ef2d42c3d60fe749e90')
             ->json([
                 "input" => [
                     'workflow_json' => $workflow,

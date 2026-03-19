@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import { GenVideoPage } from '@/pages/gen-video'
 import RequireAuth from './components/require-auth'
 
-console.log(import.meta.env.BASE_URL)
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter basename='/video-gen'>
