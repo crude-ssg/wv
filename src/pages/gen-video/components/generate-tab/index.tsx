@@ -8,7 +8,7 @@ interface GenerateTabProps {
 }
 
 export function GenerateTab({ onGenerate }: GenerateTabProps) {
-  const [mode, setMode] = useState<Mode>('T2V');
+  const [mode, setMode] = useState<Mode>('I2V');
   const [positivePrompt, setPositivePrompt] = useState('');
   const [negativePrompt, setNegativePrompt] = useState('');
   const [aspectRatio, setAspectRatio] = useState<AspectRatio>('16:9');
