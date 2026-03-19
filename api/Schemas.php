@@ -85,13 +85,12 @@ class VideoData extends ApiData
     public ?string $filepath;
 
     public function exceedsAge(int $threshold_seconds = null): bool {
-        if($threshold_seconds == null) {
+        if ($threshold_seconds === null) {
             $threshold_seconds = Config::get('gen.stale_job_threshold_hours') * 60 * 60;
         }
-        $now = new DateTime();
-        $videoTime = new DateTime($this->timestamp);
-        $diff = $now->diff($videoTime);
-        return $diff->s >= $threshold_seconds;
+
+        $videoTimestamp = strtotime($this->timestamp);
+        return (time() - $videoTimestamp) >= $threshold_seconds;
     }
 
     public static function get(string $id, $include_encoded_image = false): ?VideoData {

@@ -72,6 +72,7 @@ class VideoGenerator
         $result->timestamp = (new DateTime())->format('Y-m-d H:i:s');
         $result->filepath = null;
         $result->url = null;
+        $result->message = null;
         $result->thumbnail = null;
         VideoData::save($result);
 
