@@ -81,6 +81,10 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChange
     startGeneration
   }));
 
+  function dismissError() {
+    setError(null);
+  }
+
   async function startGeneration(settings: GenSettings) {
     setError(null);
     const dummy = createDummyVideo(settings)
@@ -153,6 +157,7 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChange
         onSelect={(id) => {
           const video = videoHistory.find(v => v.id === id)
           if (video) {
+            dismissError()
             setCurrentVideo(video)
           }
         }}
