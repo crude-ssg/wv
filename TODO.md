@@ -3,7 +3,7 @@
 
 - [x] Videos must be saved to /data/videos/$username on the web-server (symlink to webroot to be publicly accessible)
 
-- [ ] Make a cooldown of 60 seconds between each generation giving others a chance to make videos
+- [x] Make a cooldown of 60 seconds between each generation giving others a chance to make videos
 
 # Bugfixes
 - [x] Fix bug where precessing UI will show forever even after generation is completed. meaninng video won't start playing.

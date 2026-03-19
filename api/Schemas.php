@@ -76,6 +76,7 @@ class VideoData extends ApiData
     public string $id;
     public int $user_id;
     public string $job_id;
+    public ?string $message;
     public VideoStatus $job_status;
     public GenSettings $prompt;
     public string $timestamp;

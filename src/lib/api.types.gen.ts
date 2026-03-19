@@ -32,6 +32,7 @@ export interface VideoData {
   id: string;
   user_id: number;
   job_id: string;
+  message: string;
   job_status: VideoStatus;
   prompt: GenSettings;
   timestamp: string;

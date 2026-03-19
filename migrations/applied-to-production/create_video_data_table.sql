@@ -4,7 +4,7 @@ CREATE TABLE video_data (
     job_id VARCHAR(64) NOT NULL,
     job_status VARCHAR(32) NOT NULL,
     prompt LONGTEXT NOT NULL,
-    
+    message TEXT NULL,
     timestamp DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     thumbnail TEXT NULL,
     url TEXT NULL,

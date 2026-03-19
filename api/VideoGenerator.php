@@ -85,15 +85,6 @@ class VideoGenerator
             return false;
         }
         
-        // make sure its not a stale job (older than 6 hour)
-        $stale_threshold = Config::get('gen.stale_job_threshold_hours');
-        $now = new DateTime();
-        $videoTime = new DateTime($video->timestamp);
-        $diff = $now->diff($videoTime);
-        if($diff->h >= $stale_threshold) {
-            return false;
-        }
-        
-        return $video->job_status == VideoStatus::PENDING || $video->job_status == VideoStatus::PROCESSING;
+        return !$video->isStale();
     }
 }
