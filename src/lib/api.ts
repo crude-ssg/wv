@@ -27,7 +27,8 @@ export function createDummyVideo(settings?: GenSettings): VideoData {
         id: randomUid(),
         filepath: '',
         job_id: randomUid(),
-        job_status: 'pending',
+        job_status: 'processing',
+        message: null,
         user_id: 1,
         url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
         prompt: {

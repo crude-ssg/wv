@@ -85,6 +85,6 @@ class VideoGenerator
             return false;
         }
         
-        return !$video->isStale();
+        return !$video->exceedsAge() && $video->job_status != VideoStatus::COMPLETED && $video->job_status != VideoStatus::FAILED;
     }
 }

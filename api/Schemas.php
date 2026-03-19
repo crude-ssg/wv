@@ -84,12 +84,14 @@ class VideoData extends ApiData
     public ?string $url;
     public ?string $filepath;
 
-    public function isStale(): bool {
-        $stale_threshold = Config::get('gen.stale_job_threshold_hours');
+    public function exceedsAge(int $threshold_seconds = null): bool {
+        if($threshold_seconds == null) {
+            $threshold_seconds = Config::get('gen.stale_job_threshold_hours') * 60 * 60;
+        }
         $now = new DateTime();
         $videoTime = new DateTime($this->timestamp);
         $diff = $now->diff($videoTime);
-        return $diff->h >= $stale_threshold && $this->job_status != VideoStatus::COMPLETED && $this->job_status != VideoStatus::FAILED;
+        return $diff->s >= $threshold_seconds;
     }
 
     public static function get(string $id, $include_encoded_image = false): ?VideoData {
@@ -150,7 +152,7 @@ class VideoData extends ApiData
     }
 
     public static function save(VideoData $videoData): void {
-        $sql = "INSERT INTO video_data (id, user_id, job_id, job_status, url, filepath, prompt, timestamp, thumbnail) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO video_data (id, user_id, job_id, job_status, url, filepath, prompt, timestamp, thumbnail, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         Database::query($sql, [
             $videoData->id, 
             $videoData->user_id, 
@@ -160,13 +162,14 @@ class VideoData extends ApiData
             $videoData->filepath, 
             json_encode($videoData->prompt->toArray()), 
             $videoData->timestamp, 
-            $videoData->thumbnail
+            $videoData->thumbnail,
+            $videoData->message
         ]);
     }
 
     public static function update(VideoData $videoData): void {
-        $sql = "UPDATE video_data SET job_status = ?, url = ?, filepath = ?, thumbnail = ? WHERE id = ?";
-        Database::query($sql, [$videoData->job_status->value, $videoData->url, $videoData->filepath, $videoData->thumbnail, $videoData->id]);
+        $sql = "UPDATE video_data SET job_status = ?, url = ?, filepath = ?, thumbnail = ?, message = ? WHERE id = ?";
+        Database::query($sql, [$videoData->job_status->value, $videoData->url, $videoData->filepath, $videoData->thumbnail, $videoData->message, $videoData->id]);
     }
 }
 

@@ -21,6 +21,12 @@ if (VideoGenerator::hasPendingJob($user)) {
     throw new GenerateAlreadyPendingError();
 }
 
+// Make sure recently completed or failed job was not less than 60 seconds ago
+$latestVideo = VideoData::findLatestByUserId($user->id);
+if($latestVideo && ($latestVideo->job_status == VideoStatus::COMPLETED || $latestVideo->job_status == VideoStatus::FAILED) && !$latestVideo->exceedsAge(60)) {
+    throw new GenerateError("Please wait 60 seconds before generating another video");
+}
+
 $estimate = VideoGenerator::estimate($settings);
 
 // Make sure user has enough tokens

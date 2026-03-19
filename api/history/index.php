@@ -10,8 +10,9 @@ $videos = VideoData::mostRecentByUser($user->id);
 
 // this can slow down the polling, but it's better than having stale jobs
 foreach ($videos as $video) {
-    if($video->isStale()) {
+    if(($video->job_status == VideoStatus::PROCESSING || $video->job_status == VideoStatus::PENDING) && $video->exceedsAge()) {
         $video->job_status = VideoStatus::FAILED;
+        $video->message = "Job timed out";
         VideoData::update($video);
     }
 }
