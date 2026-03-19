@@ -8,6 +8,14 @@ $user = Auth::requireAuth();
 
 $settings = GenSettings::fromArray(Request::json());
 
+if(empty($settings->positivePrompt)) {
+    throw new GenerateError("Prompt is required");
+}
+
+if($settings->mode == Mode::T2V) {
+    throw new GenerateError("Text to video is not implemented yet");
+}
+
 $estimate = VideoGenerator::estimate($settings);
 
 // Make sure there isn't a job pending

@@ -18,7 +18,7 @@ interface OutputTabProps {
   onProcessingChange?: (isProcessing: boolean) => void;
 }
 
-export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChangeTab, onProcessingChange }, ref) => {
+export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChangeTab }, ref) => {
   const [error, setError] = useState<string | null>(null);
   const [currentVideo, setCurrentVideo] = useState<VideoData | null>(null);
   const [videoHistory, setVideoHistory] = useState<VideoData[]>([]);
@@ -41,19 +41,6 @@ export const OutputTab = forwardRef<OutputTabHandle, OutputTabProps>(({ onChange
     const interval = setInterval(pollState, 15_000)
     return () => clearInterval(interval)
   }, [])
-
-  // Notify parent of processing state
-  useEffect(() => {
-    if (onProcessingChange == null) {
-      return
-    }
-
-    if (currentVideo) {
-      onProcessingChange(currentVideo.job_status == 'pending' || currentVideo.job_status == 'processing')
-    } else {
-      onProcessingChange(false)
-    }
-  }, [currentVideo, onProcessingChange])
 
   async function pollState() {
     try {
